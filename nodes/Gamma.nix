@@ -2,6 +2,11 @@
   nodes.Gamma = {
     meta.system = "x86_64-linux";
 
+    includes = [
+      ../platform/inspiron-5577.nix
+      ../resource/resource.nix
+    ];
+
     traits = [
       "base"
       "font"
@@ -16,7 +21,7 @@
       "lanzaboote"
       "nixvim"
       "preservation"
-      "unfree"
+      "UNFREE"
     ];
 
     schema = {
@@ -29,13 +34,11 @@
       font.extra = true;
       software.extra = true;
       disko = {
+        device = "/dev/sda";
+        espSize = "1000M";
         swapfileSize = "16G";
+        withLUKS = true;
       };
     };
-
-    includes = [
-      ../platform/inspiron-5577.nix
-      ../resource/resource.nix
-    ];
   };
 }

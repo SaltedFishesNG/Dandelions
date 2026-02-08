@@ -2,6 +2,11 @@
   nodes.iso = {
     meta.system = "x86_64-linux";
 
+    includes = [
+      ../platform/iso.nix
+      ../resource/resource.nix
+    ];
+
     traits = [
       "base"
       "font"
@@ -20,10 +25,5 @@
       font.extra = false;
       software.extra = false;
     };
-
-    includes = [
-      ../platform/iso.nix
-      ../resource/resource.nix
-    ];
   };
 }

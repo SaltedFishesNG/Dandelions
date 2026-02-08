@@ -34,6 +34,7 @@
               # libreoffice
               mpv
               qbittorrent
+              signal-desktop
               # tor-browser
               zed-editor
 
