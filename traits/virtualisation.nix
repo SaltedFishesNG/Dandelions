@@ -9,8 +9,8 @@
     {
       name = "virtualisation";
       module =
-        { conf, ... }:
         {
+          conf,
           config,
           lib,
           pkgs,

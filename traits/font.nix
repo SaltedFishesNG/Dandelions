@@ -8,8 +8,12 @@
     {
       name = "font";
       module =
-        { conf, ... }:
-        { lib, pkgs, ... }:
+        {
+          conf,
+          lib,
+          pkgs,
+          ...
+        }:
         let
           cfg = conf.font;
         in

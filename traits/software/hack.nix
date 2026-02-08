@@ -3,8 +3,7 @@
     {
       name = "hack";
       module =
-        { conf, ... }:
-        { pkgs, ... }:
+        { conf, pkgs, ... }:
         {
           environment.systemPackages = with pkgs; [
             # aircrack-ng

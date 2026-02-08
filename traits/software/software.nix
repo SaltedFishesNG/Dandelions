@@ -8,8 +8,12 @@
     {
       name = "software";
       module =
-        { conf, ... }:
-        { lib, pkgs, ... }:
+        {
+          conf,
+          lib,
+          pkgs,
+          ...
+        }:
         let
           cfg = conf.software;
         in

@@ -24,8 +24,12 @@
     {
       name = "base";
       module =
-        { conf, ... }:
-        { lib, pkgs, ... }:
+        {
+          conf,
+          lib,
+          pkgs,
+          ...
+        }:
         let
           cfg = conf.base;
         in

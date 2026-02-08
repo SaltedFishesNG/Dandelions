@@ -1,5 +1,4 @@
-{ conf, ... }:
-{ pkgs, ... }:
+{ conf, pkgs, ... }:
 let
   userName = conf.base.userName;
 in

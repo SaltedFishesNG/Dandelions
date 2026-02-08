@@ -4,8 +4,7 @@
     {
       name = "lanzaboote";
       module =
-        { conf, ... }:
-        { lib, ... }:
+        { conf, lib, ... }:
         {
           imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 

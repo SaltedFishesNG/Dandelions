@@ -18,8 +18,7 @@
     {
       name = "disko";
       module =
-        { conf, ... }:
-        { lib, ... }:
+        { conf, lib, ... }:
         let
           cfg = conf.disko;
           btrfs = {

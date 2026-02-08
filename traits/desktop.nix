@@ -3,8 +3,8 @@
     {
       name = "desktop";
       module =
-        { conf, ... }:
         {
+          conf,
           config,
           lib,
           pkgs,

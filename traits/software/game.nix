@@ -3,8 +3,7 @@
     {
       name = "game";
       module =
-        { conf, ... }:
-        { pkgs, ... }:
+        { conf, pkgs, ... }:
         {
           environment.systemPackages = with pkgs; [
             prismlauncher
