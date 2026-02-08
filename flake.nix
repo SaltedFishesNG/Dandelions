@@ -22,22 +22,29 @@
         "aarch64-linux"
       ];
       forSystems = f: lib.genAttrs systems f;
-      cluster = nixy.eval lib {
-        imports = [
-          ./traits
-          ./nodes
-        ];
-        args = { inherit inputs; };
-      };
+      cluster =
+        system:
+        nixy.eval lib {
+          imports = [
+            ./traits
+            ./nodes
+          ];
+          args = { inherit inputs system; };
+        };
       mkSystem = node: lib.nixosSystem { modules = [ node.module ]; };
-      nixosSystems = lib.mapAttrs (_: mkSystem) cluster.nodes;
     in
     {
-      nixosConfigurations = nixosSystems;
+      nixosConfigurations = lib.mapAttrs (_: mkSystem) (cluster null).nodes;
       formatter = forSystems (s: nixpkgs.legacyPackages.${s}.nixfmt-tree);
-      packages = forSystems (s: {
-        diskoImage = nixosSystems.Image.config.system.build.diskoImages;
-        iso = nixosSystems.iso.config.system.build.isoImage;
-      });
+      packages = forSystems (
+        s:
+        let
+          nodes = (cluster s).nodes;
+        in
+        {
+          diskoImage = (mkSystem nodes.Image).config.system.build.diskoImages;
+          iso = (mkSystem nodes.iso).config.system.build.isoImage;
+        }
+      );
     };
 }

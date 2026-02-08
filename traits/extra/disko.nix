@@ -18,7 +18,12 @@
     {
       name = "disko";
       module =
-        { conf, lib, ... }:
+        {
+          conf,
+          lib,
+          system,
+          ...
+        }:
         let
           cfg = conf.disko;
           btrfs = {
@@ -71,6 +76,8 @@
 
           disko.imageBuilder = {
             enableBinfmt = true;
+            pkgs = inputs.nixpkgs.legacyPackages.${system};
+            kernelPackages = inputs.nixpkgs.legacyPackages.${system}.linuxPackages_latest;
           };
           disko.devices.nodev."/" = {
             fsType = "tmpfs";
