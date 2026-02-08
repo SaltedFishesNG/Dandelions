@@ -29,12 +29,7 @@
         ];
         args = { inherit inputs; };
       };
-      mkSystem =
-        node:
-        lib.nixosSystem {
-          system = node.meta.system;
-          modules = [ node.module ];
-        };
+      mkSystem = node: lib.nixosSystem { modules = [ node.module ]; };
       nixosSystems = lib.mapAttrs (_: mkSystem) cluster.nodes;
     in
     {

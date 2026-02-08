@@ -1,7 +1,5 @@
 {
   nodes.iso = {
-    meta.system = "x86_64-linux";
-
     includes = [
       ../platform/iso.nix
       ../resource/resource.nix

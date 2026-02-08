@@ -1,7 +1,5 @@
 {
   nodes.Gamma = {
-    meta.system = "x86_64-linux";
-
     includes = [
       ../platform/inspiron-5577.nix
       ../resource/resource.nix
