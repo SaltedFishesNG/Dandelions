@@ -1,7 +1,7 @@
 {
   traits = [
     {
-      name = "unfree";
+      name = "UNFREE";
       module =
         { conf, ... }:
         { lib, pkgs, ... }:

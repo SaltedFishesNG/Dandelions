@@ -2,6 +2,8 @@
   nodes.Image = {
     meta.system = "aarch64-linux";
 
+    includes = [ ../platform/Image.nix ];
+
     traits = [
       "base"
       "software"
@@ -28,7 +30,5 @@
         imageSize = "2G";
       };
     };
-
-    includes = [ ../platform/Image.nix ];
   };
 }

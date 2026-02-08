@@ -11,7 +11,7 @@
   -> Secure Boot disabled during installation
     $ git clone <repo>
   Edit the configuration to match your system
-    $ vim ./nixos/hosts/Gamma.nix
+    $ vim ./nixos/nodes/Gamma.nix
     $ sudo nix-shell -p disko --run "disko -m destroy,format,mount -f ./nixos#Gamma"
   Generate Secure Boot Keys
     $ sudo nix-shell -p sbctl --run "sbctl create-keys"
