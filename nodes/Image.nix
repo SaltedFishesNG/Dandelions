@@ -1,7 +1,5 @@
 {
   nodes.Image = {
-    meta.system = "aarch64-linux";
-
     includes = [ ../platform/Image.nix ];
 
     traits = [
