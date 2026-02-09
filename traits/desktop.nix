@@ -74,8 +74,6 @@
             };
             gvfs.enable = true;
             playerctld.enable = config.services.pipewire.enable;
-            udev.packages = [ pkgs.usbutils ];
-            udisks2.enable = true;
 
             xserver = {
               enable = true;
