@@ -4,7 +4,7 @@
     {
       name = "preservation";
       module =
-        { conf, ... }:
+        { schema, ... }:
         {
           imports = [ inputs.preservation.nixosModules.preservation ];
 
@@ -20,7 +20,7 @@
               "/var/lib/libvirt"
             ];
           };
-          preservation.preserveAt."/persist".users.${conf.base.userName} = {
+          preservation.preserveAt."/persist".users.${schema.base.userName} = {
             files = [ ".local/share/fish/fish_history" ];
             directories = [
               "Documents"

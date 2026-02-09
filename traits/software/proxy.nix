@@ -3,12 +3,7 @@
     {
       name = "proxy";
       module =
-        {
-          conf,
-          lib,
-          pkgs,
-          ...
-        }:
+        { lib, pkgs, ... }:
         {
           disabledModules = [ "services/networking/xray.nix" ];
           imports = [ ./_services/xray.nix ];

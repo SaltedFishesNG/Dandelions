@@ -9,13 +9,13 @@
       name = "font";
       module =
         {
-          conf,
           lib,
           pkgs,
+          schema,
           ...
         }:
         let
-          cfg = conf.font;
+          cfg = schema.font;
         in
         {
           fonts = {

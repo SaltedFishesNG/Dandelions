@@ -9,13 +9,13 @@
       name = "software";
       module =
         {
-          conf,
           lib,
           pkgs,
+          schema,
           ...
         }:
         let
-          cfg = conf.software;
+          cfg = schema.software;
         in
         {
           environment.systemPackages =

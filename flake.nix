@@ -24,7 +24,8 @@
       forSystems = f: lib.genAttrs systems f;
       cluster =
         system:
-        nixy.eval lib {
+        nixy.eval {
+          inherit lib;
           imports = [
             ./traits
             ./nodes

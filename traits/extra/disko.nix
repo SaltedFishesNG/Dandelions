@@ -19,13 +19,13 @@
       name = "disko";
       module =
         {
-          conf,
           lib,
+          schema,
           system,
           ...
         }:
         let
-          cfg = conf.disko;
+          cfg = schema.disko;
           btrfs = {
             type = "btrfs";
             extraArgs = [ "-f" ];
