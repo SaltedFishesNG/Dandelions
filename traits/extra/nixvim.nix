@@ -3,15 +3,13 @@
   traits = [
     {
       name = "nixvim";
-      module =
-        { conf, ... }:
-        {
-          imports = [ inputs.nixvim.nixosModules.nixvim ];
+      module = {
+        imports = [ inputs.nixvim.nixosModules.nixvim ];
 
-          programs.nixvim = {
-            enable = true;
-          };
+        programs.nixvim = {
+          enable = true;
         };
+      };
     }
   ];
 }

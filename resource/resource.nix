@@ -1,6 +1,6 @@
-{ conf, pkgs, ... }:
+{ schema, pkgs, ... }:
 let
-  userName = conf.base.userName;
+  userName = schema.base.userName;
 in
 {
   systemd.user.tmpfiles.users.${userName}.rules = [

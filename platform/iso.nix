@@ -1,5 +1,5 @@
 {
-  conf,
+  schema,
   lib,
   modulesPath,
   pkgs,
@@ -17,7 +17,7 @@
 
   system.nixos-init.enable = lib.mkForce false;
   services.greetd.settings.default_session.command = lib.mkForce ''
-    ${lib.getExe pkgs.tuigreet} -g "The username is '${conf.base.userName}' or 'root'."
+    ${lib.getExe pkgs.tuigreet} -g "The username is '${schema.base.userName}' or 'root'."
   '';
 
   environment.systemPackages = [ pkgs.sbctl ];

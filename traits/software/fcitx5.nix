@@ -3,7 +3,7 @@
     {
       name = "fcitx5";
       module =
-        { conf, pkgs, ... }:
+        { pkgs, ... }:
         {
           i18n.inputMethod = {
             enable = true;

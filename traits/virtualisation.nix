@@ -10,15 +10,15 @@
       name = "virtualisation";
       module =
         {
-          conf,
           config,
           lib,
           pkgs,
+          schema,
           ...
         }:
         let
-          cfg = conf.virtualisation;
-          userName = conf.base.userName;
+          cfg = schema.virtualisation;
+          userName = schema.base.userName;
         in
         {
           virtualisation = {

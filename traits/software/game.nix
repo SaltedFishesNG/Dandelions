@@ -3,7 +3,7 @@
     {
       name = "game";
       module =
-        { conf, pkgs, ... }:
+        { pkgs, schema, ... }:
         {
           environment.systemPackages = with pkgs; [
             prismlauncher
@@ -40,7 +40,7 @@
             web-ui.enable = true;
           };
 
-          users.users.${conf.base.userName}.extraGroups = [ "gamemode" ];
+          users.users.${schema.base.userName}.extraGroups = [ "gamemode" ];
         };
     }
   ];

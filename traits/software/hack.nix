@@ -3,7 +3,7 @@
     {
       name = "hack";
       module =
-        { conf, pkgs, ... }:
+        { pkgs, schema, ... }:
         {
           environment.systemPackages = with pkgs; [
             # aircrack-ng
@@ -22,7 +22,7 @@
             dumpcap.enable = true;
           };
 
-          users.users.${conf.base.userName}.extraGroups = [ "wireshark" ];
+          users.users.${schema.base.userName}.extraGroups = [ "wireshark" ];
         };
     }
   ];

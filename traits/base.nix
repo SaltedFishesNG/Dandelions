@@ -25,13 +25,13 @@
       name = "base";
       module =
         {
-          conf,
           lib,
           pkgs,
+          schema,
           ...
         }:
         let
-          cfg = conf.base;
+          cfg = schema.base;
         in
         {
           time.timeZone = "UTC";

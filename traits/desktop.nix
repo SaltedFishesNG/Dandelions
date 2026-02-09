@@ -4,10 +4,10 @@
       name = "desktop";
       module =
         {
-          conf,
           config,
           lib,
           pkgs,
+          schema,
           ...
         }:
         {
@@ -68,7 +68,7 @@
               enable = true;
               settings.default_session = {
                 command = "${lib.getExe pkgs.tuigreet}";
-                user = "${conf.base.userName}";
+                user = "${schema.base.userName}";
               };
               useTextGreeter = true;
             };
