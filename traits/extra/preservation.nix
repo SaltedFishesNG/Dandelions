@@ -1,56 +1,51 @@
 { inputs, ... }:
 {
-  traits = [
+  traits.preservation =
+    { schema, ... }:
     {
-      name = "preservation";
-      module =
-        { schema, ... }:
-        {
-          imports = [ inputs.preservation.nixosModules.preservation ];
+      imports = [ inputs.preservation.nixosModules.preservation ];
 
-          preservation.enable = true;
-          preservation.preserveAt."/persist" = {
-            files = [ ];
-            directories = [
-              "/etc/v2raya"
-              "/var/lib/archisteamfarm/config"
-              "/var/lib/bluetooth"
-              "/var/lib/flatpak"
-              "/var/lib/iwd"
-              "/var/lib/libvirt"
-            ];
-          };
-          preservation.preserveAt."/persist".users.${schema.base.userName} = {
-            files = [ ".local/share/fish/fish_history" ];
-            directories = [
-              "Documents"
-              "Downloads"
-              "Music"
-              "Pictures"
-              "Projects"
+      preservation.enable = true;
+      preservation.preserveAt."/persist" = {
+        files = [ ];
+        directories = [
+          "/etc/v2raya"
+          "/var/lib/archisteamfarm/config"
+          "/var/lib/bluetooth"
+          "/var/lib/flatpak"
+          "/var/lib/iwd"
+          "/var/lib/libvirt"
+        ];
+      };
+      preservation.preserveAt."/persist".users.${schema.base.userName} = {
+        files = [ ".local/share/fish/fish_history" ];
+        directories = [
+          "Documents"
+          "Downloads"
+          "Music"
+          "Pictures"
+          "Projects"
 
-              {
-                directory = ".gnupg";
-                mode = "0700";
-              }
-              {
-                directory = ".ssh";
-                mode = "0700";
-              }
-              ".config/Signal"
-              ".config/qBittorrent"
-              ".local/share/qBittorrent"
-              ".mozilla/firefox/default"
-              ".thunderbird/default"
-              ".var/app" # flatpak
+          {
+            directory = ".gnupg";
+            mode = "0700";
+          }
+          {
+            directory = ".ssh";
+            mode = "0700";
+          }
+          ".config/Signal"
+          ".config/qBittorrent"
+          ".local/share/qBittorrent"
+          ".mozilla/firefox/default"
+          ".thunderbird/default"
+          ".var/app" # flatpak
 
-              # Game
-              ".local/share/PrismLauncher"
-              ".local/share/Steam"
-              ".steam"
-            ];
-          };
-        };
-    }
-  ];
+          # Game
+          ".local/share/PrismLauncher"
+          ".local/share/Steam"
+          ".steam"
+        ];
+      };
+    };
 }
