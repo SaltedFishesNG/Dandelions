@@ -9,7 +9,7 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    nixy.url = "github:anialic/nixy";
+    nixy.url = "github:cuskiy/nixy";
     preservation.url = "github:nix-community/preservation";
   };
 

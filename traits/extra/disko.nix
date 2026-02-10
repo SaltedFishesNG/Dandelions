@@ -14,113 +14,108 @@
     imageSize = mkStr "2G";
   };
 
-  traits = [
+  traits.disko =
     {
-      name = "disko";
-      module =
-        {
-          lib,
-          schema,
-          system,
-          ...
-        }:
-        let
-          cfg = schema.disko;
-          btrfs = {
-            type = "btrfs";
-            extraArgs = [ "-f" ];
-            subvolumes = {
-              "/nix" = {
-                mountpoint = "/nix";
-                mountOptions = [
-                  "noatime"
-                  "compress-force=zstd"
-                ];
-              };
-              "/persist" = {
-                mountpoint = "/persist";
-                mountOptions = [
-                  "noatime"
-                  "compress-force=zstd"
-                ];
-              };
-              "/tmp" = {
-                mountpoint = "/tmp";
-                mountOptions = [
-                  "noatime"
-                  "compress-force=zstd"
-                ];
-              };
-            }
-            // lib.optionalAttrs (cfg.swapfileSize != null) {
-              "/swap" = {
-                mountpoint = "/swap";
-                mountOptions = [ "noatime" ];
-                swap.swapfile.size = cfg.swapfileSize;
-              };
-            };
-          };
-
-          luks = {
-            type = "luks";
-            name = "primary";
-            settings = {
-              allowDiscards = true;
-              bypassWorkqueues = true;
-            };
-            content = btrfs;
-          };
-        in
-        {
-          imports = [ inputs.disko.nixosModules.disko ];
-
-          disko.imageBuilder = {
-            enableBinfmt = true;
-            pkgs = inputs.nixpkgs.legacyPackages.${system};
-            kernelPackages = inputs.nixpkgs.legacyPackages.${system}.linuxPackages_latest;
-          };
-          disko.devices.nodev."/" = {
-            fsType = "tmpfs";
+      lib,
+      schema,
+      system,
+      ...
+    }:
+    let
+      cfg = schema.disko;
+      btrfs = {
+        type = "btrfs";
+        extraArgs = [ "-f" ];
+        subvolumes = {
+          "/nix" = {
+            mountpoint = "/nix";
             mountOptions = [
-              "size=50%"
-              "defaults"
-              "mode=755"
+              "noatime"
+              "compress-force=zstd"
             ];
           };
-
-          disko.devices.disk.main = {
-            imageSize = cfg.imageSize;
-            type = "disk";
-            device = cfg.device;
-            content.type = "gpt";
-            content.partitions = {
-              ESP = {
-                size = cfg.espSize;
-                type = "EF00";
-                content = {
-                  type = "filesystem";
-                  format = "vfat";
-                  mountpoint = "/boot";
-                  mountOptions = [
-                    "fmask=0077"
-                    "dmask=0077"
-                  ];
-                };
-              };
-              primary = {
-                size = "100%";
-                content = if cfg.withLUKS then luks else btrfs;
-              };
-            };
-          }
-          // lib.optionalAttrs cfg.withPostMbrGap {
-            boot = {
-              size = "1M";
-              type = "EF02";
-              priority = 0;
-            };
+          "/persist" = {
+            mountpoint = "/persist";
+            mountOptions = [
+              "noatime"
+              "compress-force=zstd"
+            ];
+          };
+          "/tmp" = {
+            mountpoint = "/tmp";
+            mountOptions = [
+              "noatime"
+              "compress-force=zstd"
+            ];
+          };
+        }
+        // lib.optionalAttrs (cfg.swapfileSize != null) {
+          "/swap" = {
+            mountpoint = "/swap";
+            mountOptions = [ "noatime" ];
+            swap.swapfile.size = cfg.swapfileSize;
           };
         };
-    }
-  ];
+      };
+
+      luks = {
+        type = "luks";
+        name = "primary";
+        settings = {
+          allowDiscards = true;
+          bypassWorkqueues = true;
+        };
+        content = btrfs;
+      };
+    in
+    {
+      imports = [ inputs.disko.nixosModules.disko ];
+
+      disko.imageBuilder = {
+        enableBinfmt = true;
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        kernelPackages = inputs.nixpkgs.legacyPackages.${system}.linuxPackages_latest;
+      };
+      disko.devices.nodev."/" = {
+        fsType = "tmpfs";
+        mountOptions = [
+          "size=50%"
+          "defaults"
+          "mode=755"
+        ];
+      };
+
+      disko.devices.disk.main = {
+        imageSize = cfg.imageSize;
+        type = "disk";
+        device = cfg.device;
+        content.type = "gpt";
+        content.partitions = {
+          ESP = {
+            size = cfg.espSize;
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [
+                "fmask=0077"
+                "dmask=0077"
+              ];
+            };
+          };
+          primary = {
+            size = "100%";
+            content = if cfg.withLUKS then luks else btrfs;
+          };
+        };
+      }
+      // lib.optionalAttrs cfg.withPostMbrGap {
+        boot = {
+          size = "1M";
+          type = "EF02";
+          priority = 0;
+        };
+      };
+    };
 }
