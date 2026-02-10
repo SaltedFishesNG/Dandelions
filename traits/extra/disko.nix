@@ -71,7 +71,7 @@
     {
       imports = [ inputs.disko.nixosModules.disko ];
 
-      disko.imageBuilder = {
+      disko.imageBuilder = lib.mkIf (system == null) {
         enableBinfmt = true;
         pkgs = inputs.nixpkgs.legacyPackages.${system};
         kernelPackages = inputs.nixpkgs.legacyPackages.${system}.linuxPackages_latest;

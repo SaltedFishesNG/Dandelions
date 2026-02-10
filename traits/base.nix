@@ -37,6 +37,11 @@
 
       boot = {
         kernelPackages = pkgs.linuxPackages_latest;
+        binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
+          "aarch64-linux"
+          "riscv64-linux"
+          "x86_64-linux"
+        ];
         tmp.cleanOnBoot = true;
         initrd.systemd.enable = true;
         loader.systemd-boot.enable = lib.mkDefault true;
