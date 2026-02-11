@@ -182,11 +182,6 @@
           pure-eval = true;
           use-cgroups = true;
         };
-        gc = {
-          automatic = true;
-          dates = "weekly";
-          options = "--delete-older-than 7d";
-        };
       };
 
       system.stateVersion = "26.05";
