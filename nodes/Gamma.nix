@@ -1,6 +1,7 @@
 {
   nodes.Gamma = {
     includes = [
+      # ../platform/foo.nix
       ../platform/inspiron-5577.nix
       ../resource/resource.nix
     ];
@@ -17,7 +18,6 @@
       "virtualisation"
       "disko"
       "lanzaboote"
-      "nixvim"
       "preservation"
       "UNFREE"
     ];

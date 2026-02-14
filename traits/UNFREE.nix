@@ -17,7 +17,7 @@
 
       environment.systemPackages = with pkgs; [
         (callPackage ./_pkgs/crossover.nix { })
-        # (callPackage ./_pkgs/ida-pro.nix {})
+        # (callPackage ./_pkgs/ida-pro.nix { })
       ];
 
       programs.steam = {
