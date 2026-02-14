@@ -27,7 +27,6 @@
           nixfmt-tree
           parted
           tree
-          vim
           wget
         ]
         ++ lib.optionals cfg.extra [
@@ -49,7 +48,7 @@
           })
           thunderbird
           # tor-browser
-          vscodium
+          # vscodium
           zed-editor
 
           android-tools
@@ -109,6 +108,10 @@
         };
         mtr.enable = cfg.extra;
         nix-ld.enable = true;
+        vim = {
+          enable = true;
+          defaultEditor = true;
+        };
       };
 
       services.flatpak.enable = cfg.extra;

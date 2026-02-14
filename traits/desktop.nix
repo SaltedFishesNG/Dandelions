@@ -30,15 +30,6 @@
         xwayland-satellite
       ];
 
-      xdg.mime.defaultApplications = {
-        "application/pdf" = "firefox.desktop";
-        "text/html" = "firefox.desktop";
-        "x-scheme-handler/about" = "firefox.desktop";
-        "x-scheme-handler/http" = "firefox.desktop";
-        "x-scheme-handler/https" = "firefox.desktop";
-        "x-scheme-handler/unknown" = "firefox.desktop";
-      };
-
       programs = {
         dconf.profiles.user.databases = [
           {
@@ -83,6 +74,15 @@
         QT_QPA_PLATFORMTHEME = "gnome";
         _JAVA_AWT_WM_NONREPARENTING = 1;
         DEFAULT_BROWSER = "${lib.getExe pkgs.firefox}";
+      };
+
+      xdg.mime.defaultApplications = {
+        "application/pdf" = "firefox.desktop";
+        "text/html" = "firefox.desktop";
+        "x-scheme-handler/about" = "firefox.desktop";
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/unknown" = "firefox.desktop";
       };
     };
 }

@@ -43,6 +43,7 @@
           "x86_64-linux"
         ];
         tmp.cleanOnBoot = true;
+        plymouth.enable = false;
         initrd.systemd.enable = true;
         loader.systemd-boot.enable = lib.mkDefault true;
         loader.systemd-boot.configurationLimit = 25;

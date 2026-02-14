@@ -1,32 +1,19 @@
-0.Third-Party Assets
+Third-Party Assets
   The `resource/bg.png` and `resource/niri/lock.png` are NOT owned by me.
     Source of `resource/images/bg.png`: <https://www.pixiv.net/artworks/126713347>
     Source of `resource/images/lock.png`: <https://www.pixiv.net/artworks/137010221>
   These images are used under fair use for non-commercial purposes.
   If you are the original artist and wish to have your work removed, please contact me.
 
-1.Install
-  Prerequisites:
-  -> UEFI boot mode enabled
-  -> Secure Boot disabled during installation
+Install NixOS
     $ git clone <repo>
-  Edit the configuration to match your system
-    $ vim ./nixos/nodes/Gamma.nix
-    $ sudo nix-shell -p disko --run "disko -m destroy,format,mount -f ./nixos#Gamma"
-  Generate Secure Boot Keys
+    $ cd Dandelions
+    $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./platform/foo.nix
+    $ vim ./nodes/Gamma.nix
+    $ sudo nix-shell -p disko --run "disko -m destroy,format,mount -f .#Gamma"
     $ sudo nix-shell -p sbctl --run "sbctl create-keys"
+    $ sudo nix-shell -p sbctl --run "sbctl enroll-keys"
     $ sudo mv /var/lib/sbctl /mnt/persist/lanzaboote
-  Install
-    $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./nixos/platform/inspiron-5577.nix
-    $ sudo nixos-install --flake ./nixos#Gamma
-    $ reboot
-
-2.Secure Boot
-  Enter Secure Boot Setup Mode
-  > Then refer to <https://nix-community.github.io/lanzaboote/getting-started/enable-secure-boot.html>
-    $ sudo mount -o bind /persist/lanzaboote /var/lib/sbctl
-    $ sudo nix run nixpkgs#sbctl -- enroll-keys
-  Enable Secure Boot
-
-3.Automatic LUKS decryption with TPM 2.0
+    $ sudo nixos-install --flake .#Gamma
     $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/disk/by-uuid/<YOUR-PARTITION-UUID>
+    $ reboot

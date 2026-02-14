@@ -29,7 +29,6 @@
           onShutdown = "shutdown";
         };
         xen = {
-          # /nix/store/*-xen-*/libexec/xen/bin/qemu-system-i386 => /run/current-system/sw/bin/qemu-system-i386
           enable = cfg.useXen;
           dom0Resources.memory = 10000;
         };

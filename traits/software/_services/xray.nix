@@ -75,10 +75,6 @@
         }
       ];
 
-      system.activationScripts.xray-config-test = ''
-        ${lib.getExe cfg.package} -test -config ${settingsFile}
-      '';
-
       systemd.services.xray = {
         description = "xray Daemon";
         after = [ "network.target" ];
