@@ -8,8 +8,6 @@ case "$1" in
         dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
         dconf write /org/gnome/desktop/interface/gtk-theme "'adw-gtk3'"
         dconf write /org/gnome/desktop/interface/icon-theme "'Papirus'"
-        # dconf write /org/qtproject/qt5ct/style "'Adwaita'"
-        # dconf write /org/qtproject/qt6ct/style "'Adwaita'"
     else
         dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
         dconf write /org/gnome/desktop/interface/gtk-theme "'adw-gtk3-dark'"

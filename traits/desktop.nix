@@ -71,8 +71,6 @@
       };
 
       environment.sessionVariables = {
-        QT_QPA_PLATFORMTHEME = "gnome";
-        _JAVA_AWT_WM_NONREPARENTING = 1;
         DEFAULT_BROWSER = "${lib.getExe pkgs.firefox}";
       };
 
