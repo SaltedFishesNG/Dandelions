@@ -8,27 +8,31 @@
       ...
     }:
     {
-      environment.systemPackages = with pkgs; [
-        adw-gtk3
-        adwaita-icon-theme
-        bibata-cursors
-        brightnessctl
-        file-roller
-        firefox
-        fuzzel
-        mako
-        nautilus
-        papirus-icon-theme
-        pavucontrol
-        qgnomeplatform
-        qgnomeplatform-qt6
-        swaybg
-        swayidle
-        swaylock
-        waybar
-        wezterm
-        xwayland-satellite
-      ];
+      environment.systemPackages =
+        with pkgs;
+        [
+          adw-gtk3
+          adwaita-icon-theme
+          bibata-cursors
+          brightnessctl
+          file-roller
+          firefox
+          fuzzel
+          mako
+          nautilus
+          papirus-icon-theme
+          pavucontrol
+          qgnomeplatform
+          qgnomeplatform-qt6
+          swaybg
+          waybar
+          wezterm
+          xwayland-satellite
+        ]
+        ++ lib.optionals schema.base.useSleep [
+          swayidle
+          swaylock
+        ];
 
       programs = {
         dconf.profiles.user.databases = [
