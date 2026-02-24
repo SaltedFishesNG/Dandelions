@@ -8,8 +8,8 @@ Third-Party Assets
 Install NixOS
     $ git clone --depth 1 <repo>
     $ cd Dandelions
-    $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./platform/foo.nix
-    $ vim ./nodes/Gamma.nix
+    $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./hardware/foo.nix
+    $ vim ./hosts/Gamma.nix
     $ sudo nix-shell -p disko --run "disko -m destroy,format,mount -f .#Gamma"
     $ sudo nix-shell -p sbctl --run "sbctl create-keys"
     $ sudo nix-shell -p sbctl --run "sbctl enroll-keys"

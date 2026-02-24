@@ -1,5 +1,5 @@
 {
-  traits.UNFREE =
+  traits.unfree =
     { lib, pkgs, ... }:
     {
       nixpkgs.config.allowUnfreePredicate =
@@ -16,8 +16,8 @@
       # nixpkgs.config.cudaSupport = true;
 
       environment.systemPackages = with pkgs; [
-        (callPackage ./_pkgs/crossover.nix { })
-        # (callPackage ./_pkgs/ida-pro.nix { })
+        crossover
+        # ida-pro
       ];
 
       programs.steam = {
