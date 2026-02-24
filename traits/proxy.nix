@@ -3,7 +3,7 @@
     { lib, pkgs, ... }:
     {
       disabledModules = [ "services/networking/xray.nix" ];
-      imports = [ ../modules/xray.nix ];
+      imports = [ ./_xray.nix ];
       services.v2raya = {
         enable = true;
         cliPackage = pkgs.xray;
