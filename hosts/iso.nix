@@ -1,8 +1,8 @@
 {
   nodes.iso = {
     includes = [
-      ../platform/iso.nix
-      ../resource/resource.nix
+      ../hardware/iso.nix
+      ../resource
     ];
 
     traits = [

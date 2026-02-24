@@ -1,6 +1,6 @@
 {
   nodes.Image = {
-    includes = [ ../platform/Image.nix ];
+    includes = [ ../hardware/Image.nix ];
 
     traits = [
       "base"

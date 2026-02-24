@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     disko.url = "github:nix-community/disko/latest";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
@@ -12,38 +13,48 @@
   };
 
   outputs =
-    { nixpkgs, nixy, ... }@inputs:
+    inputs@{ flake-parts, nixpkgs, nixy, ... }:
     let
       lib = nixpkgs.lib;
-      systems = [
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
-      forSystems = f: lib.genAttrs systems f;
+      overlay = import ./pkgs;
       cluster =
         system:
         nixy.eval {
           inherit lib;
           imports = [
             ./traits
-            ./nodes
+            ./hosts
           ];
           args = { inherit inputs system; };
         };
-      mkSystem = node: lib.nixosSystem { modules = [ node.module ]; };
+      mkSystem =
+        node:
+        lib.nixosSystem {
+          modules = [
+            node.module
+            { nixpkgs.overlays = [ overlay ]; }
+          ];
+        };
     in
-    {
-      nixosConfigurations = lib.mapAttrs (_: mkSystem) (cluster null).nodes;
-      formatter = forSystems (s: nixpkgs.legacyPackages.${s}.nixfmt-tree);
-      packages = forSystems (
-        s:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+
+      flake.nixosConfigurations = lib.mapAttrs (_: mkSystem) (cluster null).nodes;
+
+      perSystem =
+        { system, ... }:
         let
-          nodes = (cluster s).nodes;
+          nodes = (cluster system).nodes;
         in
         {
-          diskoImage = (mkSystem nodes.Image).config.system.build.diskoImages;
-          iso = (mkSystem nodes.iso).config.system.build.isoImage;
-        }
-      );
+          formatter = nixpkgs.legacyPackages.${system}.nixfmt-tree;
+          packages = {
+            diskoImage = (mkSystem nodes.Image).config.system.build.diskoImages;
+            iso = (mkSystem nodes.iso).config.system.build.isoImage;
+          };
+        };
     };
 }
