@@ -14,36 +14,29 @@
   outputs =
     { nixpkgs, nixy, ... }@inputs:
     let
-      lib = nixpkgs.lib;
       systems = [
         "aarch64-linux"
         "x86_64-linux"
       ];
-      forSystems = f: lib.genAttrs systems f;
+      forSystems = f: nixpkgs.lib.genAttrs systems f;
       cluster =
         system:
         nixy.eval {
-          inherit lib;
+          inherit (nixpkgs) lib;
           imports = [
             ./traits
             ./nodes
           ];
           args = { inherit inputs system; };
         };
-      mkSystem = node: lib.nixosSystem { modules = [ node.module ]; };
+      mkSystem = node: nixpkgs.lib.nixosSystem { modules = [ node.module ]; };
     in
     {
-      nixosConfigurations = lib.mapAttrs (_: mkSystem) (cluster null).nodes;
+      nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkSystem) (cluster null).nodes;
+      packages = forSystems (s: {
+        diskoImage = (mkSystem (cluster s).nodes.Image).config.system.build.diskoImages;
+        iso = (mkSystem (cluster s).nodes.iso).config.system.build.isoImage;
+      });
       formatter = forSystems (s: nixpkgs.legacyPackages.${s}.nixfmt-tree);
-      packages = forSystems (
-        s:
-        let
-          nodes = (cluster s).nodes;
-        in
-        {
-          diskoImage = (mkSystem nodes.Image).config.system.build.diskoImages;
-          iso = (mkSystem nodes.iso).config.system.build.isoImage;
-        }
-      );
     };
 }

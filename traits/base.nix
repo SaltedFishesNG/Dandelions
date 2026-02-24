@@ -36,7 +36,7 @@
       console.keyMap = "us";
 
       boot = {
-        kernelPackages = pkgs.linuxPackages_latest;
+        kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
         binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
           "aarch64-linux"
           "riscv64-linux"
