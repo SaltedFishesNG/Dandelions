@@ -6,7 +6,6 @@ spawn-sh-at-startup "swaybg -i ~/.config/niri/bg.png -m fill"
 spawn-sh-at-startup "swayidle -w timeout 365 'niri msg action power-off-monitors' timeout 600 'systemctl suspend-then-hibernate' before-sleep 'playerctl pause -a' before-sleep 'swaylock -Fi ~/.config/niri/lock.png'"
 
 environment {
-    GTK_IM_MODULE "simple"
     QT_QPA_PLATFORMTHEME "gnome"
     _JAVA_AWT_WM_NONREPARENTING "1"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
