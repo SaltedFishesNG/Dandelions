@@ -3,7 +3,7 @@
     includes = [
       # ../platform/foo.nix
       ../platform/inspiron-5577.nix
-      ../resource/resource.nix
+      ../resource
     ];
 
     traits = [
