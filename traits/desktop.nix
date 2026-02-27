@@ -29,7 +29,7 @@
           wezterm
           xwayland-satellite
         ]
-        ++ lib.optionals schema.base.useSleep [
+        ++ lib.optionals (schema.base.password != null || schema.base.hashedPassword != null) [
           swayidle
           swaylock
         ];
