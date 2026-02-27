@@ -1,15 +1,25 @@
 {
   traits.fcitx5 =
-    { pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       i18n.inputMethod = {
         enable = true;
         type = "fcitx5";
+        package = lib.mkForce (
+          pkgs.qt6Packages.fcitx5-with-addons.override {
+            withConfigtool = false;
+            addons = config.i18n.inputMethod.fcitx5.addons;
+          }
+        );
         fcitx5 = {
           waylandFrontend = true;
           addons = with pkgs; [
             fcitx5-fluent
-            fcitx5-gtk
             fcitx5-pinyin-zhwiki
             kdePackages.fcitx5-chinese-addons
           ];
