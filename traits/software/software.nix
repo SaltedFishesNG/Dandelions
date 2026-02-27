@@ -25,9 +25,13 @@
           nh
           nix-output-monitor
           nixfmt-tree
+          p7zip
           parted
           tree
+          unrar-free
+          unzip
           wget
+          zip
         ]
         ++ lib.optionals cfg.extra [
           # (bottles.override {removeWarningPopup = true;})
@@ -57,14 +61,10 @@
           lsof
           nil
           nixd
-          p7zip
           qrencode
           rdap
           steam-run-free
-          unrar-free
-          unzip
           whois
-          zip
         ];
 
       programs = {

@@ -6,8 +6,8 @@
 }:
 {
   schema.base = {
-    hostName = mkStr null;
-    userName = mkStr null;
+    hostName = mkStr "NixOS";
+    userName = mkStr "alice";
     password = mkStr null;
     hashedPassword = mkStr null;
     useSudo-rs = mkBool false;
@@ -16,7 +16,6 @@
     useNetworkManager = mkBool true;
     useTPM2 = mkBool true;
     useBluetooth = mkBool true;
-    useSleep = mkBool true;
     useAudio = mkBool true;
   };
 
@@ -77,7 +76,7 @@
 
       users.mutableUsers = false;
       users.users.${cfg.userName} = {
-        password = cfg.password;
+        password = if (cfg.hashedPassword != null || cfg.password != null) then cfg.password else "";
         hashedPassword = cfg.hashedPassword;
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
@@ -121,12 +120,8 @@
       };
 
       systemd.enableEmergencyMode = false;
-      systemd.sleep.extraConfig = lib.mkIf cfg.useSleep ''
-        HibernateDelaySec=30min
-        HibernateMode=shutdown platform
-      '';
       services = {
-        logind.settings.Login = lib.mkIf cfg.useSleep {
+        logind.settings.Login = {
           HandlePowerKey = "hibernate";
           HandleLidSwitch = "suspend-then-hibernate";
         };
@@ -160,7 +155,7 @@
       };
 
       documentation.nixos.enable = false;
-      documentation.man.generateCaches = false; # Slow build due to fish enabling generateCaches
+      documentation.man.generateCaches = false; # Slow build due to fish enabling caches
 
       nix = {
         package = pkgs.nixVersions.latest;
