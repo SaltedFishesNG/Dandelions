@@ -114,6 +114,9 @@
         };
       };
 
-      services.flatpak.enable = cfg.extra;
+      services = {
+        envfs.enable = true;
+        flatpak.enable = cfg.extra;
+      };
     };
 }

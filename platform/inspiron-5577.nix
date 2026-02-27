@@ -1,6 +1,4 @@
 # https://www.dell.com/support/product-details/en-us/product/inspiron-15-5577-gaming-laptop/overview
-# https://www.nvidia.com/en-us/drivers/details/261243/
-# https://us.download.nvidia.com/XFree86/Linux-x86_64/580.126.09/NVIDIA-Linux-x86_64-580.126.09.run
 {
   config,
   lib,

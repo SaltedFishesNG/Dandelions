@@ -2,7 +2,7 @@
   nodes.iso = {
     includes = [
       ../platform/iso.nix
-      ../resource/resource.nix
+      ../resource
     ];
 
     traits = [
