@@ -4,8 +4,8 @@
 
     traits = [
       "base"
-      "software"
       "disko"
+      "software"
     ];
 
     schema = {

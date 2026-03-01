@@ -8,18 +8,18 @@
 
     traits = [
       "base"
-      "font"
       "desktop"
+      "disko"
       "fcitx5"
-      "software"
+      "font"
       "game"
       "hack"
-      "proxy"
-      "virtualisation"
-      "disko"
       "lanzaboote"
       "preservation"
-      "UNFREE"
+      "proxy"
+      "software"
+      "unfree"
+      "virtualisation"
     ];
 
     schema = {

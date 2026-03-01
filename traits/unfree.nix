@@ -1,5 +1,5 @@
 {
-  traits.UNFREE =
+  traits.unfree =
     { lib, pkgs, ... }:
     {
       nixpkgs.config.allowUnfreePredicate =
