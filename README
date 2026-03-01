@@ -1,0 +1,16 @@
+Third-Party Assets
+  The `resource/bg.png` and `resource/niri/lock.png` are NOT owned by me.
+    Source of `resource/images/bg.png`: <https://www.pixiv.net/artworks/126713347>
+    Source of `resource/images/lock.png`: <https://www.pixiv.net/artworks/137010221>
+  These images are used under fair use for non-commercial purposes.
+  If you are the original artist and wish to have your work removed, please contact me.
+
+Install NixOS
+    $ git clone <repo>
+    $ cd Dandelions
+    $ git checkout excludes-nixy
+    $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./hardware.nix
+    $ vim ./modules/disko.nix
+    $ sudo nix-shell -p disko --run "disko -m destroy,format,mount ./modules/disko.nix"
+    $ sudo nixos-install --flake .#NixOS
+    $ reboot
