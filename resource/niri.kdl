@@ -21,6 +21,16 @@ hotkey-overlay {
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
 
+layer-rule {
+    match namespace="^notifications$"
+    block-out-from "screen-capture"
+}
+window-rule {
+    match app-id="Tor Browser"
+    match app-id="signal"
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    block-out-from "screen-capture"
+}
 window-rule {
     match app-id="firefox" title=r#"^(Picture-in-Picture|画中画|子母畫面)"#
     match app-id="steam"

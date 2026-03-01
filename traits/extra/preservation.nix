@@ -37,15 +37,17 @@
             directory = ".ssh";
             mode = "0700";
           }
-          ".config/Signal"
-          ".config/qBittorrent"
           ".local/share/PrismLauncher"
-          ".local/share/qBittorrent"
           ".mozilla/firefox/default"
-          ".thunderbird/default"
         ]
         ++ lib.optionals config.programs.steam.enable [ ".local/share/Steam" ]
-        ++ lib.optionals config.services.flatpak.enable [ ".var/app" ];
+        ++ lib.optionals config.services.flatpak.enable [ ".var/app" ]
+        ++ lib.optionals schema.software.extra [
+          ".config/Signal"
+          ".config/qBittorrent"
+          ".local/share/qBittorrent"
+          ".thunderbird/default"
+        ];
       };
     };
 }
