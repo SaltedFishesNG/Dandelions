@@ -155,7 +155,7 @@
       };
 
       documentation.nixos.enable = false;
-      documentation.man.generateCaches = false; # Slow build due to fish enabling caches
+      documentation.man.cache.enable = false; # Slow build due to fish enabling caches
 
       nix = {
         package = pkgs.nixVersions.latest;

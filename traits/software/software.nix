@@ -39,6 +39,7 @@
           # ladybird
           # libreoffice
           mpv
+          # obs-studio
           qbittorrent
           (symlinkJoin {
             name = "signal-desktop";
