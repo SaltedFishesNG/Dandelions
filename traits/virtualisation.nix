@@ -3,6 +3,7 @@
   schema.virtualisation = {
     useLibvirt = mkBool false;
     useXen = mkBool false;
+    useVbox = mkBool false;
     useLxc = mkBool false;
   };
 
@@ -15,7 +16,6 @@
     }:
     let
       cfg = schema.virtualisation;
-      userName = schema.base.userName;
     in
     {
       virtualisation = {
@@ -31,8 +31,19 @@
           enable = cfg.useXen;
           dom0Resources.memory = 10000;
         };
-        lxc.enable = cfg.useLxc;
+        virtualbox.host.enable = cfg.useVbox;
+        lxc = {
+          enable = cfg.useLxc;
+          unprivilegedContainers = true;
+        };
       };
+
+      users.users.${schema.base.userName}.extraGroups = [
+        "kvm"
+      ]
+      ++ lib.optionals cfg.useLibvirt [ "libvirtd" ]
+      ++ lib.optionals cfg.useVbox [ "vboxusers" ]
+      ++ lib.optionals cfg.useLxc [ "lxc-user" ];
 
       environment.systemPackages = with pkgs; [
         qemu
@@ -58,7 +69,18 @@
           }
         ];
 
-      users.users.${userName}.extraGroups = [ "kvm" ] ++ lib.optionals cfg.useLibvirt [ "libvirtd" ];
-      networking.firewall.trustedInterfaces = lib.mkIf cfg.useLibvirt [ "virbr0" ];
+      # https://github.com/NixOS/nixpkgs/issues/263359
+      # https://github.com/NixOS/nixpkgs/issues/416031
+      networking.firewall.interfaces."virbr*" = lib.mkIf cfg.useLibvirt {
+        allowedTCPPorts = [ 53 ];
+        allowedUDPPorts = [
+          53
+          67
+          547
+        ];
+      };
+
+      # https://github.com/NixOS/nixpkgs/issues/491434
+      boot.kernelPackages = lib.mkIf cfg.useVbox pkgs.linuxPackages;
     };
 }
