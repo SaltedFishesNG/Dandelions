@@ -1,4 +1,7 @@
-# https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida92/ida92.torrent
+# https://cloud.saltedfishes.com/Nix/ida92
+# https://cloud.saltedfishes.com/Nix/ida93
+# https://od.cloudsploit.top/temp/9.3/ida93
+
 # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/by-name/id/ida-free/package.nix
 {
   autoPatchelfHook,
@@ -35,30 +38,30 @@
   libxcb,
   zlib,
 }:
-stdenv.mkDerivation (finalAttrs: rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "ida-pro";
-  version = "9.2";
+  version = "9.3";
 
   srcs = [
     (fetchurl {
-      name = "ida-pro_92_x64linux.run";
-      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida92/ida-pro_92_x64linux.run";
-      hash = "sha256-qt0PiulyuE+U8ql0g0q/FhnzvZM7O02CdfnFAAjQWuE=";
+      name = "ida-pro_93_x64linux.run";
+      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida93/ida-pro_93_x64linux.run";
+      hash = "sha256-LtQ65LuE103K5vAJkhDfqNYb/qSVL1+aB6mq4Wy3D4I=";
     })
     (fetchurl {
       name = "idapro.hexlic";
-      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida92/kg_patch/idapro.hexlic";
-      sha256 = "sha256-5keOpggeMmd2yZ0GCWjI8JDf9nfMKF6Lv8bgFjZsSlo=";
+      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida93/kg_patch/idapro.hexlic";
+      sha256 = "sha256-tgRlRAwfPH28Uud3FHmy7gaBOncPiJK7ymGkarE4jh0=";
     })
     (fetchurl {
       name = "libida.so";
-      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida92/kg_patch/linux/libida.so";
-      sha256 = "sha256-LZr8z/i8fro4oD7yo6nRK2wK89a2NzpYkAgaIZv+BOk=";
+      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida93/kg_patch/linux/libida.so";
+      sha256 = "sha256-frcPbcLVec+qt+DwBvV3/tNTZOZAOU3IbnXU8aNXMl8=";
     })
     (fetchurl {
       name = "libida32.so";
-      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida92/kg_patch/linux/libida32.so";
-      sha256 = "sha256-W9zIjdoGcohz8KZXczt9NVBBOfFzzy+NbL4DaAZkjMM=";
+      url = "https://cloud.saltedfishes.com/api/raw/?path=/Nix/ida93/kg_patch/linux/libida32.so";
+      sha256 = "sha256-F5hfoaDRv0BOGb3gpQrHEv6rugvqBfCqjAa4wBAwJZY=";
     })
   ];
 
@@ -101,7 +104,7 @@ stdenv.mkDerivation (finalAttrs: rec {
     libxcb-cursor
     zlib
   ];
-  buildInputs = runtimeDependencies;
+  buildInputs = finalAttrs.runtimeDependencies;
 
   # IDA comes with its own Qt6, some dependencies are missing in the installer.
   autoPatchelfIgnoreMissingDeps = [
