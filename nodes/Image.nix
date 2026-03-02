@@ -12,7 +12,9 @@
       base = {
         hostName = "Image";
         userName = "saya";
-        password = "";
+        authorizedKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
+        ];
         useSudo-rs = true;
         useWireless = false;
         useTPM2 = false;
