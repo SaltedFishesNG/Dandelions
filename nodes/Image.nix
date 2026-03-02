@@ -4,8 +4,8 @@
 
     traits = [
       "base"
-      "software"
       "disko"
+      "software"
     ];
 
     schema = {
@@ -19,13 +19,13 @@
         useBluetooth = false;
         useAudio = false;
       };
-      software.extra = false;
       disko = {
         device = "/dev/vda";
         withLUKS = false;
         espSize = "100M";
         imageSize = "3G";
       };
+      software.extra = false;
     };
   };
 }

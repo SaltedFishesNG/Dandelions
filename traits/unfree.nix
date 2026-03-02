@@ -1,11 +1,12 @@
 {
-  traits.UNFREE =
+  traits.unfree =
     { lib, pkgs, ... }:
     {
       nixpkgs.config.allowUnfreePredicate =
         pkg:
         builtins.elem (lib.getName pkg) [
           "crossover"
+          "fcitx5-pinyin-moegirl"
           "ida-pro"
           "nvidia-settings"
           "nvidia-x11"
@@ -15,10 +16,12 @@
 
       # nixpkgs.config.cudaSupport = true;
 
-      environment.systemPackages = with pkgs; [
-        (callPackage ./_pkgs/crossover.nix { })
-        # (callPackage ./_pkgs/ida-pro.nix { })
+      environment.systemPackages = [
+        (pkgs.callPackage ./_pkgs/crossover.nix { })
+        # (pkgs.callPackage ./_pkgs/ida-pro.nix { })
       ];
+
+      i18n.inputMethod.fcitx5.addons = [ pkgs.fcitx5-pinyin-moegirl ];
 
       programs.steam = {
         enable = true;

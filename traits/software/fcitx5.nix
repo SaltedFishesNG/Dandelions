@@ -18,10 +18,10 @@
         );
         fcitx5 = {
           waylandFrontend = true;
-          addons = with pkgs; [
-            fcitx5-fluent
-            fcitx5-pinyin-zhwiki
-            kdePackages.fcitx5-chinese-addons
+          addons = [
+            pkgs.fcitx5-fluent
+            pkgs.fcitx5-pinyin-zhwiki
+            pkgs.kdePackages.fcitx5-chinese-addons
           ];
           settings.addons = {
             classicui.globalSection.Theme = "FluentDark-solid";
