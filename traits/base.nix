@@ -84,6 +84,7 @@
         isNormalUser = true;
         extraGroups = [
           "audio"
+          "input"
           "video"
           "wheel"
         ];
