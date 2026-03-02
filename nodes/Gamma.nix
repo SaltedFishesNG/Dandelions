@@ -8,18 +8,18 @@
 
     traits = [
       "base"
-      "font"
       "desktop"
+      "disko"
       "fcitx5"
-      "software"
+      "font"
       "game"
       "hack"
-      "proxy"
-      "virtualisation"
-      "disko"
       "lanzaboote"
       "preservation"
-      "UNFREE"
+      "proxy"
+      "software"
+      "unfree"
+      "virtualisation"
     ];
 
     schema = {
@@ -29,14 +29,15 @@
         password = "none";
         bootLoaderTimeout = 2;
       };
-      font.extra = true;
-      software.extra = true;
       disko = {
         device = "/dev/sda";
         espSize = "1000M";
         swapfileSize = "16G";
         withLUKS = true;
       };
+      font.extra = true;
+      software.extra = true;
+      virtualisation.useLibvirt = true;
     };
   };
 }

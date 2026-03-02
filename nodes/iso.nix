@@ -7,10 +7,10 @@
 
     traits = [
       "base"
-      "font"
       "desktop"
-      "software"
+      "font"
       "proxy"
+      "software"
     ];
 
     schema = {

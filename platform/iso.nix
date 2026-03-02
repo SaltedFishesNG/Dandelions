@@ -22,4 +22,7 @@
   '';
 
   environment.systemPackages = [ pkgs.sbctl ];
+
+  # https://github.com/NixOS/nixpkgs/issues/462556
+  services.envfs.enable = lib.mkForce false;
 }
