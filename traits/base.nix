@@ -1,7 +1,9 @@
 {
   mkBool,
   mkInt,
+  mkList,
   mkStr,
+  lib,
   ...
 }:
 {
@@ -9,6 +11,7 @@
     hostName = mkStr "NixOS";
     userName = mkStr "alice";
     password = mkStr null;
+    authorizedKeys = mkList lib.types.singleLineStr [ ];
     hashedPassword = mkStr null;
     useSudo-rs = mkBool false;
     bootLoaderTimeout = mkInt null;
@@ -78,9 +81,7 @@
       users.users.${cfg.userName} = {
         password = if (cfg.hashedPassword != null || cfg.password != null) then cfg.password else "";
         hashedPassword = cfg.hashedPassword;
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
-        ];
+        openssh.authorizedKeys.keys = cfg.authorizedKeys;
         isNormalUser = true;
         extraGroups = [
           "audio"

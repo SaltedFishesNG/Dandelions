@@ -27,6 +27,9 @@
         hostName = "Gamma";
         userName = "saya";
         password = "none";
+        authorizedKeys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
+        ];
         bootLoaderTimeout = 2;
       };
       disko = {
