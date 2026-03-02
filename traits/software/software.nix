@@ -35,7 +35,16 @@
         ]
         ++ lib.optionals cfg.extra [
           # (bottles.override {removeWarningPopup = true;})
-          chromium
+          (pkgs.chromium.override {
+            commandLineArgs = [
+              # Four years ago, someone tried enabling touchpad history navigation
+              # as the default in Chromium on Linux.
+              # To this day, it can still only be enabled in this way.
+              # https://chromium-review.googlesource.com/c/chromium/src/+/3955902
+              "--enable-features=TouchpadOverscrollHistoryNavigation,WaylandWindowDecorations"
+              "--ozone-platform-hint=auto"
+            ];
+          })
           # ladybird
           # libreoffice
           mpv
