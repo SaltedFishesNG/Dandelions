@@ -45,6 +45,7 @@
               "--ozone-platform-hint=auto"
             ];
           })
+          fractal
           # ladybird
           # libreoffice
           mpv
