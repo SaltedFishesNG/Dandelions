@@ -2,8 +2,6 @@
   traits.proxy =
     { lib, pkgs, ... }:
     {
-      disabledModules = [ "services/networking/xray.nix" ];
-      imports = [ ./_services/xray.nix ];
       services.v2raya = {
         enable = true;
         cliPackage = pkgs.xray;
@@ -18,79 +16,6 @@
         "net.ipv4.ip_forward" = 1;
         "net.ipv6.conf.all.forwarding" = 1;
       };
-
-      services.xray.enable = true;
-      services.xray.settings = {
-        log.loglevel = "info";
-
-        inbounds = [
-          {
-            tag = "tun";
-            protocol = "tun";
-            settings = {
-              name = "xray_tun";
-              MTU = 1500;
-              UserLevel = 0;
-            };
-            sniffing = {
-              enabled = true;
-              destOverride = [
-                "http"
-                "tls"
-                "quic"
-              ];
-              metadataOnly = false;
-              domainsExcluded = [ ];
-              routeOnly = true;
-            };
-          }
-        ];
-
-        outbounds = [
-          {
-            tag = "proxy";
-            protocol = "socks";
-            settings = {
-              address = "127.0.0.1";
-              port = 1024;
-            };
-          }
-          {
-            tag = "direct";
-            protocol = "freedom";
-          }
-        ];
-
-        routing = {
-          domainStrategy = "AsIs";
-          rules = [
-            {
-              inboundTag = [ "tun" ];
-              outboundTag = "direct";
-              process = [
-                ".v2rayA-wrapped"
-                ".xray-wrapped"
-                "sing-box"
-              ];
-            }
-            {
-              inboundTag = [ "tun" ];
-              outboundTag = "direct";
-              ip = [ "geoip:private" ];
-            }
-            {
-              inboundTag = [ "tun" ];
-              outboundTag = "direct";
-              domain = [ "geosite:private" ];
-            }
-            {
-              inboundTag = [ "tun" ];
-              outboundTag = "proxy";
-            }
-          ];
-        };
-      };
-      systemd.services.xray.wantedBy = lib.mkForce [ ];
 
       services.sing-box.enable = true;
       services.sing-box.settings = {
