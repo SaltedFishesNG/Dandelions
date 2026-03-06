@@ -79,8 +79,5 @@
           547
         ];
       };
-
-      # https://github.com/NixOS/nixpkgs/issues/491434
-      boot.kernelPackages = lib.mkIf cfg.useVbox pkgs.linuxPackages;
     };
 }
