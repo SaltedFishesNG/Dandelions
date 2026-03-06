@@ -17,3 +17,5 @@ Install NixOS
     $ sudo nixos-install --flake .#Gamma
     $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/disk/by-uuid/<YOUR-PARTITION-UUID>
     $ reboot
+
+If the Failed to start Import ZFS pool, boot with the zfs_force=1 option as a kernel parameter. You should only need to do this once.

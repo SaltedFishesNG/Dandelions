@@ -9,6 +9,7 @@
 {
   schema.base = {
     hostName = mkStr "NixOS";
+    machineId = mkStr "00000000";
     userName = mkStr "alice";
     password = mkStr null;
     authorizedKeys = mkList lib.types.singleLineStr [ ];
@@ -38,13 +39,14 @@
       console.keyMap = "us";
 
       boot = {
-        kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+        kernelParams = [ "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
+        supportedFilesystems = [ "zfs" ];
+        zfs.forceImportRoot = false;
         binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
           "aarch64-linux"
           "riscv64-linux"
           "x86_64-linux"
         ];
-        tmp.cleanOnBoot = true;
         plymouth.enable = false;
         initrd.systemd.enable = true;
         loader.systemd-boot.enable = lib.mkDefault true;
@@ -59,6 +61,7 @@
 
       networking = {
         hostName = lib.mkDefault cfg.hostName;
+        hostId = cfg.machineId;
         nftables.enable = true;
         dhcpcd.enable = false;
         resolvconf.enable = false;
@@ -93,7 +96,10 @@
       };
       programs.fish = {
         enable = true;
-        shellInit = "set fish_color_command blue";
+        shellAbbrs = {
+          sudo = lib.mkIf (!cfg.useSudo-rs) "doas";
+        };
+        interactiveShellInit = "set fish_color_command blue";
       };
 
       security = {
@@ -121,7 +127,6 @@
         settings.General.Experimental = true;
       };
 
-      systemd.enableEmergencyMode = false;
       services = {
         logind.settings.Login = {
           HandlePowerKey = "hibernate";

@@ -22,7 +22,7 @@
         useAudio = false;
       };
       disko = {
-        device = "/dev/vda";
+        device = "/dev/null";
         withLUKS = false;
         espSize = "100M";
         imageSize = "3G";

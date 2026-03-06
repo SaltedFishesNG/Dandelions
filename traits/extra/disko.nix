@@ -6,10 +6,11 @@
 }:
 {
   schema.disko = {
-    device = mkStr "/dev/sda";
+    device = mkStr "/dev/null";
     withLUKS = mkBool true;
-    swapfileSize = mkStr null;
+    useZFS = mkBool false;
     espSize = mkStr "1000M";
+    swapfileSize = mkStr null;
     withPostMbrGap = mkBool false;
     imageSize = mkStr "2G";
   };
@@ -41,13 +42,6 @@
               "compress-force=zstd"
             ];
           };
-          "/tmp" = {
-            mountpoint = "/tmp";
-            mountOptions = [
-              "noatime"
-              "compress-force=zstd"
-            ];
-          };
         }
         // lib.optionalAttrs (cfg.swapfileSize != null) {
           "/swap" = {
@@ -58,6 +52,58 @@
         };
       };
 
+      zfsPool.zroot = {
+        type = "zpool";
+        rootFsOptions = {
+          mountpoint = "none";
+          compression = "zstd";
+          acltype = "posixacl";
+          xattr = "sa";
+          "com.sun:auto-snapshot" = "false";
+        };
+        options = {
+          ashift = "12";
+          autotrim = "on";
+        };
+        datasets = {
+          "local/nix" = {
+            type = "zfs_fs";
+            mountpoint = "/nix";
+            options = {
+              mountpoint = "legacy";
+              atime = "off";
+            };
+          };
+          "safe/persist" = {
+            type = "zfs_fs";
+            mountpoint = "/persist";
+            options.mountpoint = "legacy";
+          };
+        }
+        // lib.optionalAttrs (cfg.swapfileSize != null) {
+          "local/swap" = {
+            type = "zfs_volume";
+            content.type = "swap";
+            options = {
+              volblocksize = "4096";
+              compression = "zle";
+              logbias = "throughput";
+              sync = "always";
+              primarycache = "metadata";
+              secondarycache = "none";
+              "com.sun:auto-snapshot" = "false";
+            };
+            size = cfg.swapfileSize;
+          };
+        };
+      };
+
+      zfs = {
+        type = "zfs";
+        pool = "zroot";
+      };
+
+      fsContent = if cfg.useZFS then zfs else btrfs;
       luks = {
         type = "luks";
         name = "primary";
@@ -65,7 +111,7 @@
           allowDiscards = true;
           bypassWorkqueues = true;
         };
-        content = btrfs;
+        content = fsContent;
       };
     in
     {
@@ -79,7 +125,7 @@
       disko.devices.nodev."/" = {
         fsType = "tmpfs";
         mountOptions = [
-          "size=50%"
+          "size=100%"
           "defaults"
           "mode=755"
         ];
@@ -106,7 +152,7 @@
           };
           primary = {
             size = "100%";
-            content = if cfg.withLUKS then luks else btrfs;
+            content = if cfg.withLUKS then luks else fsContent;
           };
         };
       }
@@ -117,5 +163,7 @@
           priority = 0;
         };
       };
+
+      disko.devices.zpool = if cfg.useZFS then zfsPool else { };
     };
 }

@@ -25,6 +25,7 @@
     schema = {
       base = {
         hostName = "Gamma";
+        machineId = "0b88e9f6";
         userName = "saya";
         password = "none";
         authorizedKeys = [
@@ -33,10 +34,11 @@
         bootLoaderTimeout = 2;
       };
       disko = {
-        device = "/dev/sda";
+        device = "/dev/null";
+        withLUKS = true;
+        useZFS = false;
         espSize = "1000M";
         swapfileSize = "16G";
-        withLUKS = true;
       };
       font.extra = true;
       software.extra = true;
