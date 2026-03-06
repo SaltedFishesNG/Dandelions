@@ -1,7 +1,7 @@
 { mkBool, ... }:
 {
   schema.font = {
-    extra = mkBool true;
+    extra = mkBool false;
   };
 
   traits.font =
