@@ -1,6 +1,5 @@
 {
   mkBool,
-  mkInt,
   mkList,
   mkStr,
   lib,
@@ -15,7 +14,6 @@
     authorizedKeys = mkList lib.types.singleLineStr [ ];
     hashedPassword = mkStr null;
     useSudo-rs = mkBool false;
-    bootLoaderTimeout = mkInt null;
     useWireless = mkBool true;
     useNetworkManager = mkBool true;
     useTPM2 = mkBool true;
@@ -52,9 +50,6 @@
         loader.systemd-boot.enable = lib.mkDefault true;
         loader.systemd-boot.configurationLimit = 25;
         loader.efi.canTouchEfiVariables = true;
-      }
-      // lib.optionalAttrs (cfg.bootLoaderTimeout != null) {
-        loader.timeout = cfg.bootLoaderTimeout;
       };
       system.nixos-init.enable = true;
       system.etc.overlay.enable = true;

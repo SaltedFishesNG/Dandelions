@@ -1,7 +1,7 @@
 { mkBool, ... }:
 {
   schema.software = {
-    extra = mkBool true;
+    extra = mkBool false;
   };
 
   traits.software =

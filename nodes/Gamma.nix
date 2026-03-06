@@ -31,7 +31,6 @@
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
         ];
-        bootLoaderTimeout = 2;
       };
       disko = {
         device = "/dev/null";
@@ -42,7 +41,10 @@
       };
       font.extra = true;
       software.extra = true;
-      virtualisation.useLibvirt = true;
+      virtualisation = {
+        useLibvirt = true;
+        useXen = false;
+      };
     };
   };
 }
