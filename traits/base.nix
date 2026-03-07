@@ -89,12 +89,18 @@
         ];
         shell = pkgs.fish;
       };
+      environment.systemPackages = [ pkgs.carapace ];
       programs.fish = {
         enable = true;
         shellAbbrs = {
           sudo = lib.mkIf (!cfg.useSudo-rs) "doas";
         };
-        interactiveShellInit = "set fish_color_command blue";
+        interactiveShellInit = ''
+          set fish_color_command blue
+          set -x CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
+          set -x CARAPACE_MATCH 1
+          carapace _carapace | source
+        '';
       };
 
       security = {
@@ -182,6 +188,6 @@
         };
       };
 
-      system.stateVersion = "26.05";
+      system.stateVersion = lib.mkDefault "26.05";
     };
 }
