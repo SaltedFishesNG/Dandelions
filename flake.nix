@@ -26,9 +26,12 @@
         };
       mkSystem = node: nixpkgs.lib.nixosSystem { modules = [ node.module ]; };
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed f;
+
+      nixpkgs-patched = import ./nixpkgs-patches { inherit nixpkgs; };
+      mkSystem-patched = node: nixpkgs-patched.lib.nixosSystem { modules = [ node.module ]; };
     in
     {
-      nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkSystem) (cluster null).nodes;
+      nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkSystem-patched) (cluster null).nodes;
       packages = forAllSystems (s: {
         diskoImage = (mkSystem (cluster s).nodes.Image).config.system.build.diskoImages;
         iso = (mkSystem (cluster s).nodes.iso).config.system.build.isoImage;
