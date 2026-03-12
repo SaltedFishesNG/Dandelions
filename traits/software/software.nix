@@ -69,7 +69,7 @@
             '';
           })
           thunderbird
-          # tor-browser
+          tor-browser
           # vscodium
           zed-editor
 

@@ -15,8 +15,8 @@
 
     schema = {
       base = {
-        hostName = "iso";
-        userName = "nixos";
+        hostname = "iso";
+        username = "nixos";
         useSudo-rs = true;
       };
       font.extra = false;

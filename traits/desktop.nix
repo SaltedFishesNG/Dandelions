@@ -55,7 +55,7 @@
           enable = true;
           settings.default_session = {
             command = "${lib.getExe pkgs.tuigreet}";
-            user = "${schema.base.userName}";
+            user = "${schema.base.username}";
           };
           useTextGreeter = true;
         };
@@ -74,8 +74,13 @@
       };
 
       xdg.mime.defaultApplications = {
-        "image/*" = "firefox.desktop";
         "application/pdf" = "firefox.desktop";
+        "application/xhtml+xml" = "firefox.desktop";
+        "application/xhtml_xml" = "firefox.desktop";
+        "application/xml" = "firefox.desktop";
+        "image/*" = "firefox.desktop";
+        "text/html" = "firefox.desktop";
+        "text/xml" = "firefox.desktop";
         "x-scheme-handler/about" = "firefox.desktop";
         "x-scheme-handler/http" = "firefox.desktop";
         "x-scheme-handler/https" = "firefox.desktop";

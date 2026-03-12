@@ -1,19 +1,14 @@
 {
   traits.fcitx5 =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    {
+    { lib, pkgs, ... }:
+    rec {
       i18n.inputMethod = {
         enable = true;
         type = "fcitx5";
         package = lib.mkForce (
           pkgs.qt6Packages.fcitx5-with-addons.override {
             withConfigtool = false;
-            addons = config.i18n.inputMethod.fcitx5.addons;
+            addons = i18n.inputMethod.fcitx5.addons;
           }
         );
         fcitx5 = {

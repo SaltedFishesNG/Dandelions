@@ -38,7 +38,7 @@
         };
       };
 
-      users.users.${schema.base.userName}.extraGroups = [
+      users.users.${schema.base.username}.extraGroups = [
         "kvm"
       ]
       ++ lib.optionals cfg.useLibvirt [ "libvirtd" ]
