@@ -7,6 +7,9 @@
 }:
 {
   schema.base = {
+    useLix = mkBool false;
+    nixSubstituters = mkList lib.types.str [ ];
+
     hostName = mkStr "NixOS";
     machineId = mkStr "00000000";
     userName = mkStr "alice";
@@ -31,7 +34,7 @@
     let
       cfg = schema.base;
     in
-    {
+    rec {
       time.timeZone = "UTC";
       i18n.defaultLocale = "C.UTF-8";
       console.keyMap = "us";
@@ -161,25 +164,32 @@
       documentation.man.cache.enable = false; # Slow build due to fish enabling caches
 
       nix = {
-        package = pkgs.nixVersions.latest;
+        package = if cfg.useLix then pkgs.lixPackageSets.stable.lix else pkgs.nixVersions.latest;
         channel.enable = false;
         settings = {
-          substituters = [ "https://mirror.sjtu.edu.cn/nix-channels/store" ];
-          trusted-users = [ "${cfg.userName}" ];
-          experimental-features = [
-            "auto-allocate-uids"
-            "ca-derivations"
-            "cgroups"
-            "flakes"
-            "nix-command"
-            "no-url-literals"
-            "pipe-operators"
-          ];
+          allowed-users = [ "root" ] ++ nix.settings.trusted-users;
           auto-allocate-uids = true;
           auto-optimise-store = true;
           builders-use-substitutes = true;
+          experimental-features = [
+            "auto-allocate-uids"
+            "cgroups"
+            "flakes"
+            "nix-command"
+          ]
+          ++ lib.optionals cfg.useLix [ "pipe-operator" ]
+          ++ lib.optionals (!cfg.useLix) [
+            "ca-derivations"
+            "pipe-operators"
+          ];
           pure-eval = true;
+          substituters = cfg.nixSubstituters;
+          trusted-users = [
+            "${cfg.username}"
+            "@wheel"
+          ];
           use-cgroups = true;
+          warn-dirty = false;
         };
       };
 
