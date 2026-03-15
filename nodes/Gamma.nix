@@ -24,6 +24,7 @@
 
     schema = {
       base = {
+        nixSubstituters = [ "https://mirror.sjtu.edu.cn/nix-channels/store" ];
         hostname = "Gamma";
         machineId = "0b88e9f6";
         username = "saya";
