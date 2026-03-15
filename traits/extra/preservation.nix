@@ -20,7 +20,7 @@
         ++ lib.optionals config.services.v2raya.enable [ "/etc/v2raya" ]
         ++ lib.optionals config.virtualisation.libvirtd.enable [ "/var/lib/libvirt" ];
 
-      preservation.preserveAt."/persist".users.${schema.base.userName} = {
+      preservation.preserveAt."/persist".users.${schema.base.username} = {
         files = [ ".local/share/fish/fish_history" ];
         directories = [
           "Documents"

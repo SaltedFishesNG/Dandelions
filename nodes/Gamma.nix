@@ -24,9 +24,9 @@
 
     schema = {
       base = {
-        hostName = "Gamma";
+        hostname = "Gamma";
         machineId = "0b88e9f6";
-        userName = "saya";
+        username = "saya";
         password = "none";
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"

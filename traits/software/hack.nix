@@ -19,6 +19,6 @@
         dumpcap.enable = true;
       };
 
-      users.users.${schema.base.userName}.extraGroups = [ "wireshark" ];
+      users.users.${schema.base.username}.extraGroups = [ "wireshark" ];
     };
 }

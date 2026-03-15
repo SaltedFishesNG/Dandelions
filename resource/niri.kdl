@@ -27,10 +27,12 @@ layer-rule {
 }
 window-rule {
     match app-id="Tor Browser"
+    match app-id="org.gnome.Fractal"
     match app-id="signal"
     match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
     block-out-from "screen-capture"
 }
+
 window-rule {
     match app-id="firefox" title=r#"^(Picture-in-Picture|画中画|子母畫面)"#
     match app-id="steam"
@@ -46,23 +48,16 @@ window-rule {
     open-floating true
     default-floating-position x=15 y=15 relative-to="top-right"
 }
+
 window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
 }
-
-input {
-    keyboard {
-        xkb {
-            layout "us"
-        }
-        numlock
+window-rule {
+    match is-active=false
+    shadow {
+        off
     }
-    touchpad {
-        tap
-        natural-scroll
-    }
-    disable-power-key-handling
 }
 
 layout {
@@ -90,6 +85,20 @@ layout {
         on
         spread 1
     }
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+    disable-power-key-handling
 }
 
 binds {

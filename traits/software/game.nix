@@ -37,6 +37,6 @@
         web-ui.enable = true;
       };
 
-      users.users.${schema.base.userName}.extraGroups = [ "gamemode" ];
+      users.users.${schema.base.username}.extraGroups = [ "gamemode" ];
     };
 }
