@@ -25,6 +25,8 @@
           args = { inherit inputs system; };
         };
       mkSystem = node: nixpkgs.lib.nixosSystem { modules = [ node.module ]; };
+      # nixpkgs-patched = import ./nixpkgs-patches { inherit nixpkgs; };
+      # mkSystem-patched = node: nixpkgs-patched.lib.nixosSystem { modules = [ node.module ]; };
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed f;
     in
     {
