@@ -49,8 +49,15 @@
           # ladybird
           # libreoffice
           mpv
-          # obs-studio
-          qbittorrent
+          obs-studio
+          (symlinkJoin {
+            name = "qbittorrent";
+            paths = [ qbittorrent ];
+            buildInputs = [ makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/qbittorrent --set QT_QPA_PLATFORMTHEME "gtk3"
+            '';
+          })
           (symlinkJoin {
             name = "signal-desktop";
             paths = [ signal-desktop ];
@@ -62,7 +69,7 @@
             '';
           })
           thunderbird
-          # tor-browser
+          tor-browser
           # vscodium
           zed-editor
 

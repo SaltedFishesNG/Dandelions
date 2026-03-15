@@ -7,12 +7,13 @@
 }:
 {
   schema.base = {
-    hostName = mkStr "NixOS";
+    hostname = mkStr "NixOS";
     machineId = mkStr "00000000";
-    userName = mkStr "alice";
+    username = mkStr "alice";
     password = mkStr null;
-    authorizedKeys = mkList lib.types.singleLineStr [ ];
     hashedPassword = mkStr null;
+    authorizedKeys = mkList lib.types.singleLineStr [ ];
+
     useSudo-rs = mkBool false;
     useWireless = mkBool true;
     useNetworkManager = mkBool true;
@@ -31,7 +32,7 @@
     let
       cfg = schema.base;
     in
-    {
+    rec {
       time.timeZone = "UTC";
       i18n.defaultLocale = "C.UTF-8";
       console.keyMap = "us";
@@ -55,7 +56,7 @@
       system.etc.overlay.enable = true;
 
       networking = {
-        hostName = lib.mkDefault cfg.hostName;
+        hostName = lib.mkDefault cfg.hostname;
         hostId = cfg.machineId;
         nftables.enable = true;
         dhcpcd.enable = false;
@@ -76,7 +77,7 @@
       '';
 
       users.mutableUsers = false;
-      users.users.${cfg.userName} = {
+      users.users.${cfg.username} = {
         password = if (cfg.hashedPassword != null || cfg.password != null) then cfg.password else "";
         hashedPassword = cfg.hashedPassword;
         openssh.authorizedKeys.keys = cfg.authorizedKeys;
@@ -110,20 +111,20 @@
         };
         rtkit.enable = true;
         sudo.enable = false;
-        sudo-rs = lib.mkIf cfg.useSudo-rs {
-          enable = true;
+        sudo-rs = {
+          enable = cfg.useSudo-rs;
           execWheelOnly = true;
           wheelNeedsPassword = false;
         };
-        tpm2 = lib.mkIf cfg.useTPM2 {
-          enable = true;
+        tpm2 = {
+          enable = cfg.useTPM2;
           pkcs11.enable = true;
           tctiEnvironment.enable = true;
         };
       };
 
-      hardware.bluetooth = lib.mkIf cfg.useBluetooth {
-        enable = true;
+      hardware.bluetooth = {
+        enable = cfg.useBluetooth;
         powerOnBoot = true;
         settings.General.Experimental = true;
       };
@@ -155,8 +156,8 @@
         userborn.enable = true;
         dbus.implementation = "broker";
         pulseaudio.enable = false;
-        pipewire = lib.mkIf cfg.useAudio {
-          enable = true;
+        pipewire = {
+          enable = cfg.useAudio;
           alsa.enable = true;
           pulse.enable = true;
         };
