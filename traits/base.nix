@@ -4,16 +4,12 @@
     useLix = mkOpt lib.types.bool false;
     nixSubstituters = mkOpt (lib.types.listOf lib.types.str) [ ];
 
-    hostname = mkOpt lib.types.str "NixOS";
-    machineId = mkOpt lib.types.str "00000000";
     username = mkOpt lib.types.str "alice";
     password = mkOpt (lib.types.nullOr lib.types.str) null;
     hashedPassword = mkOpt (lib.types.nullOr lib.types.str) null;
     authorizedKeys = mkOpt (lib.types.listOf lib.types.singleLineStr) [ ];
 
     useSudo-rs = mkOpt lib.types.bool false;
-    useWireless = mkOpt lib.types.bool true;
-    useNetworkManager = mkOpt lib.types.bool true;
     useTPM2 = mkOpt lib.types.bool true;
     useBluetooth = mkOpt lib.types.bool true;
     useAudio = mkOpt lib.types.bool true;
@@ -46,27 +42,6 @@
       };
       system.nixos-init.enable = true;
       system.etc.overlay.enable = true;
-
-      networking = {
-        hostName = lib.mkDefault cfg.hostname;
-        hostId = cfg.machineId;
-        nftables.enable = true;
-        dhcpcd.enable = false;
-        resolvconf.enable = false;
-        networkmanager.enable = cfg.useNetworkManager;
-        networkmanager.wifi.backend = lib.mkIf cfg.useWireless "iwd";
-        wireless.iwd.enable = cfg.useWireless;
-        useNetworkd = !cfg.useNetworkManager;
-        useDHCP = !cfg.useNetworkManager;
-      };
-      systemd.network.enable = !cfg.useNetworkManager;
-      services.resolved.enable = false;
-      environment.etc."resolv.conf".text = ''
-        nameserver 1.1.1.1
-        nameserver 2606:4700:4700::1111
-        nameserver 8.8.8.8
-        nameserver 2001:4860:4860::8888
-      '';
 
       users.mutableUsers = false;
       users.users.${cfg.username} = {

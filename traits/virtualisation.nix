@@ -67,15 +67,6 @@
           }
         ];
 
-      # https://github.com/NixOS/nixpkgs/issues/263359
-      # https://github.com/NixOS/nixpkgs/issues/416031
-      networking.firewall.interfaces."virbr*" = lib.mkIf cfg.useLibvirt {
-        allowedTCPPorts = [ 53 ];
-        allowedUDPPorts = [
-          53
-          67
-          547
-        ];
-      };
+      networking.firewall.trustedInterfaces = lib.mkIf cfg.useLibvirt [ "virbr*" ];
     };
 }

@@ -5,18 +5,17 @@
     traits = [
       "base"
       "disko"
+      "network"
       "software"
     ];
 
     schema = {
       base = {
-        hostname = "Image";
         username = "saya";
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
         ];
         useSudo-rs = true;
-        useWireless = false;
         useTPM2 = false;
         useBluetooth = false;
         useAudio = false;
@@ -26,6 +25,10 @@
         withLUKS = false;
         espSize = "100M";
         imageSize = "3G";
+      };
+      network = {
+        hostname = "Image";
+        useWireless = false;
       };
       software.extra = false;
     };
