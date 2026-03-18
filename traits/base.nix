@@ -1,37 +1,26 @@
-{
-  mkBool,
-  mkList,
-  mkStr,
-  lib,
-  ...
-}:
+{ lib, mkOpt, ... }:
 {
   schema.base = {
-    useLix = mkBool false;
-    nixSubstituters = mkList lib.types.str [ ];
+    useLix = mkOpt lib.types.bool false;
+    nixSubstituters = mkOpt (lib.types.listOf lib.types.str) [ ];
 
-    hostname = mkStr "NixOS";
-    machineId = mkStr "00000000";
-    username = mkStr "alice";
-    password = mkStr null;
-    hashedPassword = mkStr null;
-    authorizedKeys = mkList lib.types.singleLineStr [ ];
+    hostname = mkOpt lib.types.str "NixOS";
+    machineId = mkOpt lib.types.str "00000000";
+    username = mkOpt lib.types.str "alice";
+    password = mkOpt (lib.types.nullOr lib.types.str) null;
+    hashedPassword = mkOpt (lib.types.nullOr lib.types.str) null;
+    authorizedKeys = mkOpt (lib.types.listOf lib.types.singleLineStr) [ ];
 
-    useSudo-rs = mkBool false;
-    useWireless = mkBool true;
-    useNetworkManager = mkBool true;
-    useTPM2 = mkBool true;
-    useBluetooth = mkBool true;
-    useAudio = mkBool true;
+    useSudo-rs = mkOpt lib.types.bool false;
+    useWireless = mkOpt lib.types.bool true;
+    useNetworkManager = mkOpt lib.types.bool true;
+    useTPM2 = mkOpt lib.types.bool true;
+    useBluetooth = mkOpt lib.types.bool true;
+    useAudio = mkOpt lib.types.bool true;
   };
 
   traits.base =
-    {
-      lib,
-      pkgs,
-      schema,
-      ...
-    }:
+    { pkgs, schema, ... }:
     let
       cfg = schema.base;
     in

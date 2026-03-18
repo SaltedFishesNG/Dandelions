@@ -1,16 +1,11 @@
-{ mkBool, ... }:
+{ lib, mkOpt, ... }:
 {
   schema.software = {
-    extra = mkBool false;
+    extra = mkOpt lib.types.bool false;
   };
 
   traits.software =
-    {
-      lib,
-      pkgs,
-      schema,
-      ...
-    }:
+    { pkgs, schema, ... }:
     let
       cfg = schema.software;
     in
