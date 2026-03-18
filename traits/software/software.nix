@@ -29,8 +29,8 @@
           zip
         ]
         ++ lib.optionals cfg.extra [
-          # (bottles.override {removeWarningPopup = true;})
-          (pkgs.chromium.override {
+          (bottles.override { removeWarningPopup = true; })
+          (chromium.override {
             commandLineArgs = [
               # Four years ago, someone tried enabling touchpad history navigation
               # as the default in Chromium on Linux.

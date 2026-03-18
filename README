@@ -11,9 +11,6 @@ Install NixOS
     $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./platform/foo.nix
     $ vim ./nodes/Gamma.nix
     $ sudo nix-shell -p disko --run "disko -m destroy,format,mount -f .#Gamma"
-    $ sudo nix-shell -p sbctl --run "sbctl create-keys"
-    $ sudo nix-shell -p sbctl --run "sbctl enroll-keys"
-    $ sudo mv /var/lib/sbctl /mnt/persist/lanzaboote
     $ sudo nixos-install --flake .#Gamma
     $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/disk/by-uuid/<YOUR-PARTITION-UUID>
     $ reboot
