@@ -15,6 +15,7 @@
       "game"
       "hack"
       "lanzaboote"
+      "network"
       "preservation"
       "proxy"
       "software"
@@ -25,8 +26,6 @@
     schema = {
       base = {
         nixSubstituters = [ "https://mirror.sjtu.edu.cn/nix-channels/store" ];
-        hostname = "Gamma";
-        machineId = "0b88e9f6";
         username = "saya";
         password = "none";
         authorizedKeys = [
@@ -39,6 +38,10 @@
         useZFS = false;
         espSize = "1000M";
         swapfileSize = "16G";
+      };
+      network = {
+        hostname = "Gamma";
+        machineId = "0b88e9f6";
       };
       font.extra = true;
       software.extra = true;

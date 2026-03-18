@@ -9,17 +9,20 @@
       "base"
       "desktop"
       "font"
+      "network"
       "proxy"
       "software"
     ];
 
     schema = {
       base = {
-        hostname = "iso";
         username = "nixos";
         useSudo-rs = true;
       };
       font.extra = false;
+      network = {
+        hostname = "iso";
+      };
       software.extra = false;
     };
   };
