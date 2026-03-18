@@ -1,19 +1,14 @@
-{ mkBool, ... }:
+{ lib, mkOpt, ... }:
 {
   schema.virtualisation = {
-    useLibvirt = mkBool false;
-    useXen = mkBool false;
-    useVbox = mkBool false;
-    useLxc = mkBool false;
+    useLibvirt = mkOpt lib.types.bool false;
+    useXen = mkOpt lib.types.bool false;
+    useVbox = mkOpt lib.types.bool false;
+    useLxc = mkOpt lib.types.bool false;
   };
 
   traits.virtualisation =
-    {
-      lib,
-      pkgs,
-      schema,
-      ...
-    }:
+    { pkgs, schema, ... }:
     let
       cfg = schema.virtualisation;
     in

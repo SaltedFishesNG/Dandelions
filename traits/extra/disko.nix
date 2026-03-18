@@ -1,27 +1,23 @@
 {
   inputs,
-  mkBool,
-  mkStr,
+  lib,
+  mkOpt,
+  system ? null,
   ...
 }:
 {
   schema.disko = {
-    device = mkStr "/dev/null";
-    withLUKS = mkBool true;
-    useZFS = mkBool false;
-    espSize = mkStr "1000M";
-    swapfileSize = mkStr null;
-    withPostMbrGap = mkBool false;
-    imageSize = mkStr "2G";
+    device = mkOpt lib.types.str "/dev/null";
+    withLUKS = mkOpt lib.types.bool true;
+    useZFS = mkOpt lib.types.bool false;
+    espSize = mkOpt lib.types.str "1000M";
+    swapfileSize = mkOpt (lib.types.nullOr lib.types.str) null;
+    withPostMbrGap = mkOpt lib.types.bool false;
+    imageSize = mkOpt lib.types.str "2G";
   };
 
   traits.disko =
-    {
-      lib,
-      schema,
-      system,
-      ...
-    }:
+    { schema, ... }:
     let
       cfg = schema.disko;
       btrfs = {
@@ -122,6 +118,7 @@
         pkgs = inputs.nixpkgs.legacyPackages.${system};
         kernelPackages = inputs.nixpkgs.legacyPackages.${system}.linuxPackages_latest;
       };
+
       disko.devices.nodev."/" = {
         fsType = "tmpfs";
         mountOptions = [

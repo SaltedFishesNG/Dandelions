@@ -116,11 +116,11 @@
     },
     "nixy": {
       "locked": {
-        "lastModified": 1770694800,
-        "narHash": "sha256-W11w52IfGkfeqXHrMXmI++3t9MzAiKroqc5OpbSsp1g=",
+        "lastModified": 1773585728,
+        "narHash": "sha256-i748qctZEYOO0mvH4fH37EtMLYapwATZlTsnT1RgmGI=",
         "owner": "cuskiy",
         "repo": "nixy",
-        "rev": "fe4024fe3b6d0869105bcd8df4b94b55e4f4d8ae",
+        "rev": "4feeca0b8d7564ef7d8763e87e9da4e39d61a318",
         "type": "github"
       },
       "original": {

@@ -1,16 +1,11 @@
-{ mkBool, ... }:
+{ lib, mkOpt, ... }:
 {
   schema.font = {
-    extra = mkBool false;
+    extra = mkOpt lib.types.bool false;
   };
 
   traits.font =
-    {
-      lib,
-      pkgs,
-      schema,
-      ...
-    }:
+    { pkgs, schema, ... }:
     let
       cfg = schema.font;
     in

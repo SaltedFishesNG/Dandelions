@@ -14,27 +14,23 @@
   outputs =
     { nixpkgs, nixy, ... }@inputs:
     let
-      cluster =
-        system:
-        nixy.eval {
-          inherit (nixpkgs) lib;
-          imports = [
-            ./traits
-            ./nodes
-          ];
-          args = { inherit inputs system; };
-        };
-      mkSystem = node: nixpkgs.lib.nixosSystem { modules = [ node.module ]; };
+      mkOpt = type: default: nixpkgs.lib.mkOption { inherit type default; };
+      cluster = system: nixy.eval {
+        inherit (nixpkgs) lib;
+        imports = [ ./nodes ./traits ];
+        args = { inherit inputs mkOpt system; };
+      };
+      mkSystem = node: nixpkgs.lib.nixosSystem { modules = [ node.module ]; specialArgs = { inherit (node) schema; }; };
       # nixpkgs-patched = import ./nixpkgs-patches { inherit nixpkgs; };
-      # mkSystem-patched = node: nixpkgs-patched.lib.nixosSystem { modules = [ node.module ]; };
+      # mkSystem = node: nixpkgs-patched.lib.nixosSystem { modules = [ node.module ]; specialArgs = { inherit (node) schema; }; };
       forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed f;
     in
-    {
+    rec {
       nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkSystem) (cluster null).nodes;
-      packages = forAllSystems (s: {
-        diskoImage = (mkSystem (cluster s).nodes.Image).config.system.build.diskoImages;
-        iso = (mkSystem (cluster s).nodes.iso).config.system.build.isoImage;
+      packages = forAllSystems (system: {
+        diskoImage = (mkSystem (cluster system).nodes.Image).config.system.build.diskoImages;
+        iso = nixosConfigurations.iso.config.system.build.isoImage;
       });
-      formatter = forAllSystems (s: nixpkgs.legacyPackages.${s}.nixfmt-tree);
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }
