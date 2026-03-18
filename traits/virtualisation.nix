@@ -3,6 +3,8 @@
   schema.virtualisation = {
     useLibvirt = mkOpt lib.types.bool false;
     useXen = mkOpt lib.types.bool false;
+    xenDom0Memory = mkOpt lib.types.ints.unsigned 10000;
+    xenDom0MaxMemory = mkOpt lib.types.ints.unsigned 10000;
     useVbox = mkOpt lib.types.bool false;
     useLxc = mkOpt lib.types.bool false;
   };
@@ -24,7 +26,8 @@
         };
         xen = {
           enable = cfg.useXen;
-          dom0Resources.memory = 10000;
+          dom0Resources.memory = cfg.xenDom0Memory;
+          dom0Resources.maxMemory = cfg.xenDom0MaxMemory;
         };
         virtualbox.host.enable = cfg.useVbox;
         lxc = {

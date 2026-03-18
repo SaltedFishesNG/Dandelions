@@ -19,7 +19,7 @@
 
       services.sing-box.enable = true;
       services.sing-box.settings = {
-        log.level = "info";
+        log.level = "error";
         log.timestamp = true;
 
         inbounds = [

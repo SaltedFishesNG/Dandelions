@@ -5,16 +5,17 @@
     {
       imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
-      boot = {
-        # Lanzaboote currently replaces the systemd-boot module.
-        # This setting is usually set to true in configuration.nix
-        # generated at installation time. So we force it to false
-        # for now.
-        loader.systemd-boot.enable = lib.mkForce false;
-        lanzaboote = {
-          enable = true;
-          pkiBundle = "/persist/lanzaboote";
-        };
+      boot.loader = {
+        grub.enable = lib.mkForce false;
+        limine.enable = lib.mkForce false;
+        refind.enable = lib.mkForce false;
+        systemd-boot.enable = lib.mkForce false;
+      };
+
+      boot.lanzaboote = {
+        enable = true;
+        pkiBundle = "/persist/var/lib/sbctl";
+        autoGenerateKeys.enable = true;
       };
     };
 }

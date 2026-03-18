@@ -11,14 +11,15 @@
       imports = [ inputs.preservation.nixosModules.preservation ];
 
       preservation.enable = true;
-      preservation.preserveAt."/persist".directories =
-        [ ]
-        ++ lib.optionals config.hardware.bluetooth.enable [ "/var/lib/bluetooth" ]
-        ++ lib.optionals config.networking.wireless.iwd.enable [ "/var/lib/iwd" ]
-        ++ lib.optionals config.services.archisteamfarm.enable [ "/var/lib/archisteamfarm/config" ]
-        ++ lib.optionals config.services.flatpak.enable [ "/var/lib/flatpak" ]
-        ++ lib.optionals config.services.v2raya.enable [ "/etc/v2raya" ]
-        ++ lib.optionals config.virtualisation.libvirtd.enable [ "/var/lib/libvirt" ];
+      preservation.preserveAt."/persist".directories = [
+        "/var/lib/sbctl"
+      ]
+      ++ lib.optionals config.hardware.bluetooth.enable [ "/var/lib/bluetooth" ]
+      ++ lib.optionals config.networking.wireless.iwd.enable [ "/var/lib/iwd" ]
+      ++ lib.optionals config.services.archisteamfarm.enable [ "/var/lib/archisteamfarm/config" ]
+      ++ lib.optionals config.services.flatpak.enable [ "/var/lib/flatpak" ]
+      ++ lib.optionals config.services.v2raya.enable [ "/etc/v2raya" ]
+      ++ lib.optionals config.virtualisation.libvirtd.enable [ "/var/lib/libvirt" ];
 
       preservation.preserveAt."/persist".users.${schema.base.username} = {
         files = [ ".local/share/fish/fish_history" ];
@@ -49,6 +50,7 @@
         ++ lib.optionals schema.software.extra [
           ".config/Signal"
           ".config/qBittorrent"
+          ".local/share/bottles"
           ".local/share/fractal"
           ".local/share/qBittorrent"
           ".thunderbird/default"
