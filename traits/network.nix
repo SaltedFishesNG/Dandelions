@@ -1,10 +1,9 @@
-{ lib, mkOpt, ... }:
 {
   schema.network = {
-    hostname = mkOpt lib.types.str "NixOS";
-    machineId = mkOpt lib.types.str "00000000";
-    useWireless = mkOpt lib.types.bool true;
-    useNetworkManager = mkOpt lib.types.bool true;
+    hostname = "NixOS"; # str
+    machineId = "00000000"; # str
+    useWireless = true; # bool
+    useNetworkManager = true; # bool
   };
 
   traits.network =

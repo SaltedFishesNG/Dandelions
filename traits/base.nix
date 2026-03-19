@@ -1,18 +1,17 @@
-{ lib, mkOpt, ... }:
 {
   schema.base = {
-    useLix = mkOpt lib.types.bool false;
-    nixSubstituters = mkOpt (lib.types.listOf lib.types.str) [ ];
+    useLix = false; # bool
+    nixSubstituters = [ ]; # listOf str
 
-    username = mkOpt lib.types.str "alice";
-    password = mkOpt (lib.types.nullOr lib.types.str) null;
-    hashedPassword = mkOpt (lib.types.nullOr lib.types.str) null;
-    authorizedKeys = mkOpt (lib.types.listOf lib.types.singleLineStr) [ ];
+    username = "alice"; # str
+    password = null; # null or str
+    hashedPassword = null; # null or str
+    authorizedKeys = [ ]; # listOf singleLineStr
 
-    useSudo-rs = mkOpt lib.types.bool false;
-    useTPM2 = mkOpt lib.types.bool true;
-    useBluetooth = mkOpt lib.types.bool true;
-    useAudio = mkOpt lib.types.bool true;
+    useSudo-rs = false; # bool
+    useTPM2 = true; # bool
+    useBluetooth = true; # bool
+    useAudio = true; # bool
   };
 
   traits.base =

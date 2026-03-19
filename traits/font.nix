@@ -1,7 +1,6 @@
-{ lib, mkOpt, ... }:
 {
   schema.font = {
-    extra = mkOpt lib.types.bool false;
+    extra = false; # bool
   };
 
   traits.font =

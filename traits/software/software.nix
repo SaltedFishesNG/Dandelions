@@ -1,7 +1,6 @@
-{ lib, mkOpt, ... }:
 {
   schema.software = {
-    extra = mkOpt lib.types.bool false;
+    extra = false; # bool
   };
 
   traits.software =

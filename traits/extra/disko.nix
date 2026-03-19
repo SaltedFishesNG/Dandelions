@@ -1,13 +1,12 @@
-{ lib, mkOpt, ... }:
 {
   schema.disko = {
-    device = mkOpt lib.types.str "/dev/null";
-    withLUKS = mkOpt lib.types.bool true;
-    useZFS = mkOpt lib.types.bool false;
-    espSize = mkOpt lib.types.str "1000M";
-    swapfileSize = mkOpt (lib.types.nullOr lib.types.str) null;
-    withPostMbrGap = mkOpt lib.types.bool false;
-    imageSize = mkOpt lib.types.str "2G";
+    device = "/dev/null"; # str
+    withLUKS = true; # bool
+    useZFS = false; # bool
+    espSize = "1000M";
+    swapfileSize = null; # null or str
+    withPostMbrGap = false; # bool
+    imageSize = "2G"; # str
   };
 
   traits.disko =

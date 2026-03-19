@@ -15,10 +15,7 @@
     { nixpkgs, nixy, ... }@inputs:
     let
       # nixpkgs-patched = system: import ./nixpkgs-patches { inherit nixpkgs system; };
-      cluster = nixy.eval {
-        inherit (nixpkgs) lib;
-        imports = [ ./nodes ] ++ [ ./traits ];
-      };
+      cluster = nixy.eval { imports = [ ./nodes ] ++ [ ./traits ]; };
       mkSystem =
         system: node:
         nixpkgs.lib.nixosSystem {
