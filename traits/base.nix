@@ -16,9 +16,14 @@
   };
 
   traits.base =
-    { pkgs, schema, ... }:
+    {
+      lib,
+      node,
+      pkgs,
+      ...
+    }:
     let
-      cfg = schema.base;
+      cfg = node.schema.base;
     in
     rec {
       time.timeZone = "UTC";

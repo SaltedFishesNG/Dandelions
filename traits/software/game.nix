@@ -1,6 +1,6 @@
 {
   traits.game =
-    { pkgs, schema, ... }:
+    { node, pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
         prismlauncher
@@ -37,6 +37,6 @@
         web-ui.enable = true;
       };
 
-      users.users.${schema.base.username}.extraGroups = [ "gamemode" ];
+      users.users.${node.schema.base.username}.extraGroups = [ "gamemode" ];
     };
 }

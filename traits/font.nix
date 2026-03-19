@@ -5,9 +5,14 @@
   };
 
   traits.font =
-    { pkgs, schema, ... }:
+    {
+      lib,
+      node,
+      pkgs,
+      ...
+    }:
     let
-      cfg = schema.font;
+      cfg = node.schema.font;
     in
     {
       fonts = {

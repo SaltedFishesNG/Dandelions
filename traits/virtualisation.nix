@@ -10,9 +10,14 @@
   };
 
   traits.virtualisation =
-    { pkgs, schema, ... }:
+    {
+      lib,
+      node,
+      pkgs,
+      ...
+    }:
     let
-      cfg = schema.virtualisation;
+      cfg = node.schema.virtualisation;
     in
     {
       virtualisation = {
@@ -36,7 +41,7 @@
         };
       };
 
-      users.users.${schema.base.username}.extraGroups = [
+      users.users.${node.schema.base.username}.extraGroups = [
         "kvm"
       ]
       ++ lib.optionals cfg.useLibvirt [ "libvirtd" ]

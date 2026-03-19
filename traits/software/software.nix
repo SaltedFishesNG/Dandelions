@@ -5,9 +5,14 @@
   };
 
   traits.software =
-    { pkgs, schema, ... }:
+    {
+      lib,
+      node,
+      pkgs,
+      ...
+    }:
     let
-      cfg = schema.software;
+      cfg = node.schema.software;
     in
     {
       environment.systemPackages =

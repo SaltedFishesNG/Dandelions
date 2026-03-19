@@ -1,10 +1,4 @@
-{
-  inputs,
-  lib,
-  mkOpt,
-  system ? null,
-  ...
-}:
+{ lib, mkOpt, ... }:
 {
   schema.disko = {
     device = mkOpt lib.types.str "/dev/null";
@@ -17,9 +11,15 @@
   };
 
   traits.disko =
-    { schema, ... }:
+    {
+      inputs,
+      lib,
+      node,
+      system ? null,
+      ...
+    }:
     let
-      cfg = schema.disko;
+      cfg = node.schema.disko;
       btrfs = {
         type = "btrfs";
         extraArgs = [ "-f" ];
@@ -113,7 +113,7 @@
     {
       imports = [ inputs.disko.nixosModules.disko ];
 
-      disko.imageBuilder = lib.mkIf (system == null) {
+      disko.imageBuilder = lib.mkIf (system != null) {
         enableBinfmt = true;
         pkgs = inputs.nixpkgs.legacyPackages.${system};
         kernelPackages = inputs.nixpkgs.legacyPackages.${system}.linuxPackages_latest;
