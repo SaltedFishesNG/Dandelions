@@ -1,10 +1,10 @@
-{ inputs, ... }:
 {
   traits.preservation =
     {
       config,
+      inputs,
       lib,
-      schema,
+      node,
       ...
     }:
     {
@@ -21,7 +21,7 @@
       ++ lib.optionals config.services.v2raya.enable [ "/etc/v2raya" ]
       ++ lib.optionals config.virtualisation.libvirtd.enable [ "/var/lib/libvirt" ];
 
-      preservation.preserveAt."/persist".users.${schema.base.username} = {
+      preservation.preserveAt."/persist".users.${node.schema.base.username} = {
         files = [ ".local/share/fish/fish_history" ];
         directories = [
           "Documents"
@@ -47,7 +47,7 @@
           ".local/share/flatpak"
         ]
         ++ lib.optionals config.services.gnome.gnome-keyring.enable [ ".local/share/keyrings" ]
-        ++ lib.optionals schema.software.extra [
+        ++ lib.optionals node.schema.software.extra [
           ".config/Signal"
           ".config/qBittorrent"
           ".local/share/bottles"

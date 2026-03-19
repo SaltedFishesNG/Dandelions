@@ -3,8 +3,8 @@
     {
       config,
       lib,
+      node,
       pkgs,
-      schema,
       ...
     }:
     {
@@ -29,7 +29,7 @@
           wezterm
           xwayland-satellite
         ]
-        ++ lib.optionals (schema.base.password != null || schema.base.hashedPassword != null) [
+        ++ lib.optionals (node.schema.base.password != null || node.schema.base.hashedPassword != null) [
           swayidle
           swaylock
         ];
@@ -55,7 +55,7 @@
           enable = true;
           settings.default_session = {
             command = "${lib.getExe pkgs.tuigreet}";
-            user = "${schema.base.username}";
+            user = "${node.schema.base.username}";
           };
           useTextGreeter = true;
         };

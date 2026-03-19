@@ -1,6 +1,6 @@
-{ schema, pkgs, ... }:
+{ node, pkgs, ... }:
 let
-  username = schema.base.username;
+  username = node.schema.base.username;
 in
 {
   systemd.user.tmpfiles.users.${username}.rules = [

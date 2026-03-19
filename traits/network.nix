@@ -8,9 +8,14 @@
   };
 
   traits.network =
-    { config, schema, ... }:
+    {
+      config,
+      lib,
+      node,
+      ...
+    }:
     let
-      cfg = schema.network // config.networking.firewall;
+      cfg = node.schema.network // config.networking.firewall;
     in
     {
       networking = {

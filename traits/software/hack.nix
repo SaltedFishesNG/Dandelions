@@ -1,6 +1,6 @@
 {
   traits.hack =
-    { pkgs, schema, ... }:
+    { node, pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [
         # aircrack-ng
@@ -19,6 +19,6 @@
         dumpcap.enable = true;
       };
 
-      users.users.${schema.base.username}.extraGroups = [ "wireshark" ];
+      users.users.${node.schema.base.username}.extraGroups = [ "wireshark" ];
     };
 }
