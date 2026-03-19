@@ -1,12 +1,11 @@
-{ lib, mkOpt, ... }:
 {
   schema.virtualisation = {
-    useLibvirt = mkOpt lib.types.bool false;
-    useXen = mkOpt lib.types.bool false;
-    xenDom0Memory = mkOpt lib.types.ints.unsigned 10000;
-    xenDom0MaxMemory = mkOpt lib.types.ints.unsigned 10000;
-    useVbox = mkOpt lib.types.bool false;
-    useLxc = mkOpt lib.types.bool false;
+    useLibvirt = false; # bool
+    useXen = false; # bool
+    xenDom0Memory = 10000; # ints.unsigned
+    xenDom0MaxMemory = 10000; # ints.unsigned
+    useVbox = false; # bool
+    useLxc = false; # bool
   };
 
   traits.virtualisation =
