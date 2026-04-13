@@ -29,6 +29,7 @@
 
   hardware.graphics.enable = true;
   hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     open = false;
     modesetting.enable = true;
     prime = {
