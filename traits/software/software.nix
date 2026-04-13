@@ -57,16 +57,7 @@
               wrapProgram $out/bin/qbittorrent --set QT_QPA_PLATFORMTHEME "gtk3"
             '';
           })
-          (symlinkJoin {
-            name = "signal-desktop";
-            paths = [ signal-desktop ];
-            buildInputs = [ makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/signal-desktop \
-                --set HTTPS_PROXY "socks5://localhost:1024" \
-                --set HTTP_PROXY "socks5://localhost:1024"
-            '';
-          })
+          signal-desktop
           thunderbird
           tor-browser
           # vscodium
@@ -102,8 +93,6 @@
           }
           // lib.optionalAttrs cfg.extra {
             commit.gpgSign = true;
-            http.proxy = "socks5://localhost:1024";
-            https.proxy = "socks5://localhost:1024";
             tag.gpgSign = true;
             user.email = "main@saltedfishes.com";
             user.name = "SaltedFishes";
@@ -132,7 +121,7 @@
       };
 
       services = {
-        envfs.enable = true;
+        envfs.enable = cfg.extra;
         flatpak.enable = cfg.extra;
       };
     };

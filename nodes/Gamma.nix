@@ -25,7 +25,6 @@
 
     schema = {
       base = {
-        nixSubstituters = [ "https://mirror.sjtu.edu.cn/nix-channels/store" ];
         username = "saya";
         password = "none";
         authorizedKeys = [
