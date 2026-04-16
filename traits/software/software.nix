@@ -82,6 +82,7 @@
         };
         git = {
           enable = true;
+          package = pkgs.gitFull;
           config = {
             core.autocrlf = "input";
             core.editor = "vim";

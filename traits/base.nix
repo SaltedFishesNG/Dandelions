@@ -139,6 +139,7 @@
           auto-allocate-uids = true;
           auto-optimise-store = true;
           builders-use-substitutes = true;
+          download-attempts = 15;
           experimental-features = [
             "auto-allocate-uids"
             "cgroups"
@@ -151,6 +152,7 @@
             "pipe-operators"
           ];
           pure-eval = true;
+          stalled-download-timeout = 15;
           substituters = cfg.nixSubstituters;
           trusted-users = [
             "${cfg.username}"
