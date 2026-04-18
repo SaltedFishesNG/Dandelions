@@ -14,8 +14,6 @@
           "steam-unwrapped"
         ];
 
-      # nixpkgs.config.cudaSupport = true;
-
       environment.systemPackages = [
         (pkgs.callPackage ./_pkgs/crossover.nix { })
         # (pkgs.callPackage ./_pkgs/ida-pro.nix { })

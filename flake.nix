@@ -3,10 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    disko.url = "github:nix-community/disko/latest";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
-    lanzaboote.url = "github:nix-community/lanzaboote";
-    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixy.url = "github:cuskiy/nixy";
     preservation.url = "github:nix-community/preservation";
   };
@@ -14,7 +18,7 @@
   outputs =
     { nixpkgs, nixy, ... }@inputs:
     let
-      # nixpkgs-patched = system: import ./nixpkgs-patches { inherit nixpkgs system; };
+      # nixpkgs-patched = system: import ./nixpkgs-patch.nix { inherit nixpkgs system; };
       cluster = nixy.eval { imports = [ ./nodes ] ++ [ ./traits ]; };
       mkSystem =
         system: node:
