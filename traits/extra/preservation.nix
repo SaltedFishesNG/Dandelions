@@ -44,6 +44,7 @@
           ".local/share/PrismLauncher"
           ".mozilla/firefox/default"
         ]
+        ++ lib.optionals (config.i18n.inputMethod.type == "fcitx5") [ ".local/share/fcitx5/rime/build" ]
         ++ lib.optionals config.programs.steam.enable [ ".local/share/Steam" ]
         ++ lib.optionals config.services.flatpak.enable [
           ".var/app"

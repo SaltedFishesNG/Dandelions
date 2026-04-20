@@ -48,6 +48,12 @@ window-rule {
     open-floating true
     default-floating-position x=15 y=15 relative-to="top-right"
 }
+window-rule {
+    match app-id="xdg-desktop-portal-gtk"
+    open-floating true
+    default-column-width { fixed 950; }
+    default-window-height { fixed 600; }
+}
 
 window-rule {
     geometry-corner-radius 10

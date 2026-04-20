@@ -1,26 +1,42 @@
 {
   traits.fcitx5 =
-    { lib, pkgs, ... }:
-    rec {
+    { pkgs, ... }:
+    let
+      rime-config = pkgs.runCommand "rime-config" { } ''
+        mkdir -p $out/share/rime-data
+        cp ${builtins.toFile "default.yaml" ''
+          __include: rime_ice_suggestion:/
+          ascii_composer:
+            good_old_caps_lock: true
+            switch_key:
+              Caps_Lock: noop
+              Shift_L: noop
+              Shift_R: noop
+              Control_L: noop
+              Control_R: noop
+          menu:
+            page_size: 7
+        ''} $out/share/rime-data/default.yaml
+      '';
+    in
+    {
       i18n.inputMethod = {
         enable = true;
         type = "fcitx5";
-        package = lib.mkForce (
-          pkgs.qt6Packages.fcitx5-with-addons.override {
-            withConfigtool = false;
-            addons = i18n.inputMethod.fcitx5.addons;
-          }
-        );
         fcitx5 = {
           waylandFrontend = true;
           addons = [
-            pkgs.fcitx5-fluent
-            pkgs.fcitx5-pinyin-zhwiki
-            pkgs.kdePackages.fcitx5-chinese-addons
+            pkgs.fcitx5-mellow-themes
+            (pkgs.fcitx5-rime.override { rimeDataPkgs = [ pkgs.rime-ice ] ++ [ rime-config ]; })
+            # pkgs.fcitx5-pinyin-zhwiki
+            # pkgs.kdePackages.fcitx5-chinese-addons
           ];
           settings.addons = {
-            classicui.globalSection.Theme = "FluentDark-solid";
-            pinyin.globalSection.FirstRun = "False";
+            classicui.globalSection = {
+              Theme = "mellow-graphite";
+              DarkTheme = "mellow-graphite-dark";
+              UseDarkTheme = "True";
+            };
           };
           settings.inputMethod = {
             "Groups/0" = {
@@ -28,48 +44,19 @@
               "Default Layout" = "us";
               DefaultIM = "keyboard-us";
             };
-            "Groups/0/Items/0" = {
-              Name = "keyboard-us";
-              Layout = "";
-            };
-            "Groups/0/Items/1" = {
-              Name = "pinyin";
-              Layout = "";
-            };
+            "Groups/0/Items/0".Name = "keyboard-us";
+            "Groups/0/Items/1".Name = "rime";
+            # "Groups/0/Items/1".Name = "pinyin";
           };
           settings.globalOptions = {
-            # 切换输入法
-            "Hotkey/TriggerKeys" = {
-              "0" = "Control+space";
-            };
-            # 激活输入法
-            "Hotkey/ActivateKeys" = {
-              "0" = "VoidSymbol";
-            };
-            # 取消激活输入法
-            "Hotkey/DeactivateKeys" = {
-              "0" = "VoidSymbol";
-            };
-            # 临时切换输入法
-            "Hotkey/AltTriggerKeys" = {
-              "0" = "VoidSymbol";
-            };
-            # 向前切换输入法分组
-            "Hotkey/EnumerateGroupForwardKeys" = {
-              "0" = "VoidSymbol";
-            };
-            # 向后切换输入法分组
-            "Hotkey/EnumerateGroupBackwardKeys" = {
-              "0" = "VoidSymbol";
-            };
-            Behavior = {
-              # 允许在密码框中使用输入法
-              AllowInputMethodForPassword = true;
-              # 输入密码时显示预编辑文本
-              ShowPreeditForPassword = true;
-            };
+            "Hotkey/TriggerKeys"."0" = "Control+space";
+            "Hotkey/ActivateKeys"."0" = "VoidSymbol";
+            "Hotkey/AltTriggerKeys"."0" = "VoidSymbol";
+            "Hotkey/DeactivateKeys"."0" = "VoidSymbol";
+            "Hotkey/EnumerateGroupBackwardKeys"."0" = "VoidSymbol";
+            "Hotkey/EnumerateGroupForwardKeys"."0" = "VoidSymbol";
           };
-          ignoreUserConfig = true;
+          ignoreUserConfig = false; # Rime will use .local/share/fcitx5/rime/build
         };
       };
     };
