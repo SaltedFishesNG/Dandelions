@@ -4,7 +4,7 @@
 
     traits = [
       "base"
-      "disko"
+      "extra/disko"
       "network"
       "software"
     ];
@@ -20,7 +20,7 @@
         useBluetooth = false;
         useAudio = false;
       };
-      disko = {
+      extra.disko = {
         device = "/dev/null";
         withLUKS = false;
         espSize = "100M";

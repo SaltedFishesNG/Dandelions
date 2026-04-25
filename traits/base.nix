@@ -16,6 +16,7 @@
 
   traits.base =
     {
+      config,
       lib,
       node,
       pkgs,
@@ -24,14 +25,13 @@
     let
       cfg = node.schema.base;
     in
-    rec {
+    {
       time.timeZone = "UTC";
       i18n.defaultLocale = "C.UTF-8";
       console.keyMap = "us";
 
       boot = {
         kernelParams = [ "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
-        supportedFilesystems = [ "zfs" ];
         zfs.forceImportRoot = false;
         binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
           "aarch64-linux"
@@ -135,7 +135,7 @@
         package = if cfg.useLix then pkgs.lixPackageSets.stable.lix else pkgs.nixVersions.latest;
         channel.enable = false;
         settings = {
-          allowed-users = [ "root" ] ++ nix.settings.trusted-users;
+          allowed-users = [ "root" ] ++ config.nix.settings.trusted-users;
           auto-allocate-uids = true;
           auto-optimise-store = true;
           builders-use-substitutes = true;
@@ -153,7 +153,12 @@
           ];
           pure-eval = true;
           stalled-download-timeout = 15;
-          substituters = cfg.nixSubstituters;
+          substituters = cfg.nixSubstituters ++ [
+            "https://nix-community.cachix.org"
+          ];
+          trusted-public-keys = [
+            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+          ];
           trusted-users = [
             "${cfg.username}"
             "@wheel"

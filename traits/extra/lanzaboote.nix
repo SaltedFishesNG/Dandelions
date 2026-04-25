@@ -1,5 +1,5 @@
 {
-  traits.lanzaboote =
+  traits."extra/lanzaboote" =
     { inputs, lib, ... }:
     {
       imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];

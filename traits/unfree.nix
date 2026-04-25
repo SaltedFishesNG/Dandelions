@@ -5,8 +5,7 @@
       nixpkgs.config.allowUnfreePredicate =
         pkg:
         builtins.elem (lib.getName pkg) [
-          "crossover"
-          "ida-pro"
+          # "ida-pro"
           "nvidia-settings"
           "nvidia-x11"
           "steam"
@@ -14,7 +13,6 @@
         ];
 
       environment.systemPackages = [
-        (pkgs.callPackage ./_pkgs/crossover.nix { })
         # (pkgs.callPackage ./_pkgs/ida-pro.nix { })
       ];
 

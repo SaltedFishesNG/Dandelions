@@ -1,5 +1,5 @@
 {
-  traits.fcitx5 =
+  traits."software/fcitx5" =
     { pkgs, ... }:
     let
       rime-config = pkgs.runCommand "rime-config" { } ''

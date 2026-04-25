@@ -3,36 +3,31 @@
     {
       config,
       lib,
-      node,
       pkgs,
       ...
     }:
     {
-      environment.systemPackages =
-        with pkgs;
-        [
-          adw-gtk3
-          adwaita-icon-theme
-          bibata-cursors
-          brightnessctl
-          file-roller
-          firefox
-          fuzzel
-          mako
-          nautilus
-          papirus-icon-theme
-          pavucontrol
-          qgnomeplatform
-          qgnomeplatform-qt6
-          swaybg
-          waybar
-          wezterm
-          xwayland-satellite
-        ]
-        ++ lib.optionals (node.schema.base.password != null || node.schema.base.hashedPassword != null) [
-          swayidle
-          swaylock
-        ];
+      environment.systemPackages = with pkgs; [
+        adw-gtk3
+        adwaita-icon-theme
+        bibata-cursors
+        brightnessctl
+        file-roller
+        firefox
+        fuzzel
+        mako
+        nautilus
+        papirus-icon-theme
+        pavucontrol
+        qgnomeplatform
+        qgnomeplatform-qt6
+        swaybg
+        swayidle
+        swaylock
+        waybar
+        wezterm
+        xwayland-satellite
+      ];
 
       programs = {
         dconf.profiles.user.databases = [
@@ -53,10 +48,7 @@
         blueman.enable = config.hardware.bluetooth.enable;
         greetd = {
           enable = true;
-          settings.default_session = {
-            command = "${lib.getExe pkgs.tuigreet}";
-            user = "${node.schema.base.username}";
-          };
+          settings.default_session.command = "${lib.getExe pkgs.tuigreet}";
           useTextGreeter = true;
         };
         gvfs.enable = true;
