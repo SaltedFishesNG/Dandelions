@@ -10,8 +10,8 @@
       "desktop"
       "font"
       "network"
-      "proxy"
       "software"
+      "software/proxy"
     ];
 
     schema = {

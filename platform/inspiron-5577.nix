@@ -3,6 +3,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 {
@@ -10,6 +11,7 @@
 
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd.availableKernelModules = [
       "ahci"
       "rtsx_usb_sdmmc"

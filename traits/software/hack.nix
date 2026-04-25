@@ -1,5 +1,5 @@
 {
-  traits.hack =
+  traits."software/hack" =
     { node, pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

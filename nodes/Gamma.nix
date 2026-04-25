@@ -9,16 +9,16 @@
     traits = [
       "base"
       "desktop"
-      "disko"
-      "fcitx5"
+      "extra/disko"
+      "extra/lanzaboote"
+      "extra/preservation"
       "font"
-      "game"
-      "hack"
-      "lanzaboote"
       "network"
-      "preservation"
-      "proxy"
       "software"
+      "software/fcitx5"
+      "software/game"
+      "software/hack"
+      "software/proxy"
       "unfree"
       "virtualisation"
     ];
@@ -31,7 +31,7 @@
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
         ];
       };
-      disko = {
+      extra.disko = {
         device = "/dev/null";
         withLUKS = true;
         useZFS = false;

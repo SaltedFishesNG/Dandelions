@@ -1,5 +1,5 @@
 {
-  traits.proxy =
+  traits."software/proxy" =
     { lib, pkgs, ... }:
     {
       services.v2raya = {

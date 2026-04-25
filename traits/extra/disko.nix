@@ -1,5 +1,5 @@
 {
-  schema.disko = {
+  schema.extra.disko = {
     device = "/dev/null"; # str
     withLUKS = true; # bool
     useZFS = false; # bool
@@ -9,7 +9,7 @@
     imageSize = "2G"; # str
   };
 
-  traits.disko =
+  traits."extra/disko" =
     {
       inputs,
       lib,
@@ -18,7 +18,7 @@
       ...
     }:
     let
-      cfg = node.schema.disko;
+      cfg = node.schema.extra.disko;
       btrfs = {
         type = "btrfs";
         extraArgs = [ "-f" ];

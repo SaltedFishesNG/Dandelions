@@ -1,5 +1,5 @@
 {
-  traits.preservation =
+  traits."extra/preservation" =
     {
       config,
       inputs,

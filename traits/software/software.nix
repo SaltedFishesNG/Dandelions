@@ -33,7 +33,7 @@
           zip
         ]
         ++ lib.optionals cfg.extra [
-          (bottles.override { removeWarningPopup = true; })
+          # (bottles.override { removeWarningPopup = true; })
           (chromium.override {
             commandLineArgs = [
               # Four years ago, someone tried enabling touchpad history navigation
@@ -66,13 +66,13 @@
           android-tools
           appimage-run
           dnsutils
+          inetutils
           lsof
           nil
           nixd
           qrencode
           rdap
           steam-run-free
-          whois
         ];
 
       programs = {
