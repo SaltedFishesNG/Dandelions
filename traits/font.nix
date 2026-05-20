@@ -10,9 +10,6 @@
       pkgs,
       ...
     }:
-    let
-      cfg = node.schema.font;
-    in
     {
       fonts = {
         enableDefaultPackages = false;
@@ -28,7 +25,7 @@
             noto-fonts-color-emoji
             sarasa-gothic
           ]
-          ++ lib.optionals cfg.extra [
+          ++ lib.optionals node.schema.font.extra [
             jetbrains-mono
             maple-mono.NF-CN
             nerd-fonts.fira-code

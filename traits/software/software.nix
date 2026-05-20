@@ -10,9 +10,6 @@
       pkgs,
       ...
     }:
-    let
-      cfg = node.schema.software;
-    in
     {
       environment.systemPackages =
         with pkgs;
@@ -32,7 +29,7 @@
           wget
           zip
         ]
-        ++ lib.optionals cfg.extra [
+        ++ lib.optionals node.schema.software.extra [
           # (bottles.override { removeWarningPopup = true; })
           (chromium.override {
             commandLineArgs = [
@@ -92,7 +89,7 @@
             rebase.autoStash = true;
             safe.directory = "*";
           }
-          // lib.optionalAttrs cfg.extra {
+          // lib.optionalAttrs node.schema.software.extra {
             commit.gpgSign = true;
             tag.gpgSign = true;
             user.email = "main@saltedfishes.com";
@@ -113,7 +110,7 @@
             tree_view = true;
           };
         };
-        mtr.enable = cfg.extra;
+        mtr.enable = node.schema.software.extra;
         nix-ld.enable = true;
         vim = {
           enable = true;
@@ -122,8 +119,8 @@
       };
 
       services = {
-        envfs.enable = cfg.extra;
-        flatpak.enable = cfg.extra;
+        envfs.enable = node.schema.software.extra;
+        flatpak.enable = node.schema.software.extra;
       };
     };
 }

@@ -28,6 +28,7 @@
     {
       time.timeZone = "UTC";
       i18n.defaultLocale = "C.UTF-8";
+      i18n.extraLocales = "all";
       console.keyMap = "us";
 
       boot = {
@@ -105,6 +106,7 @@
           settings = {
             PasswordAuthentication = false;
             PermitRootLogin = lib.mkForce "prohibit-password";
+            X11Forwarding = true;
           };
         };
         kmscon = {
