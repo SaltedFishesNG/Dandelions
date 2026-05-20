@@ -25,6 +25,7 @@
         swayidle
         swaylock
         waybar
+        waypipe
         wezterm
         xwayland-satellite
       ];
@@ -42,6 +43,7 @@
         ];
         niri.enable = true;
         nm-applet.enable = config.networking.networkmanager.enable;
+        seahorse.enable = config.services.gnome.gnome-keyring.enable;
       };
 
       services = {
@@ -58,7 +60,6 @@
           enable = true;
           displayManager.startx.enable = true;
           windowManager.openbox.enable = true;
-          windowManager.i3.enable = true;
         };
       };
 

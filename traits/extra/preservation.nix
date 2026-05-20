@@ -54,7 +54,7 @@
         ++ lib.optionals node.schema.software.extra [
           ".config/Signal"
           ".config/qBittorrent"
-          ".local/share/bottles"
+          # ".local/share/bottles"
           ".local/share/fractal"
           ".local/share/qBittorrent"
           ".thunderbird/default"

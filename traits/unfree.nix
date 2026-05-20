@@ -8,6 +8,7 @@
           # "ida-pro"
           "nvidia-settings"
           "nvidia-x11"
+          "nvidia-kernel-modules"
           "steam"
           "steam-unwrapped"
         ];
