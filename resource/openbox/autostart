@@ -1,0 +1,4 @@
+nix run nixpkgs#picom -- --backend glx -b &
+nix run nixpkgs#feh -- --bg-scale ~/.config/niri/bg.png &
+nix run nixpkgs#tint2 &
+nix run nixpkgs#volumeicon &
