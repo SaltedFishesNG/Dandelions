@@ -1,0 +1,103 @@
+// https://github.com/Alexays/Waybar/wiki
+{
+  "layer": "top",
+  "position": "top",
+  "margin": "5 0 0 0",
+  "height": 30,
+
+  "modules-left": ["niri/workspaces", "custom/theme", "niri/window"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "network",
+    "tray",
+    // "bluetooth",
+    "backlight",
+    "pulseaudio#output",
+    "pulseaudio#input",
+    "battery",
+  ],
+
+  "niri/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": "○",
+      "active": "●",
+    },
+  },
+  "custom/theme": {
+    "format": "",
+    "on-click": "~/.config/waybar/service.sh theme",
+    "tooltip": false,
+  },
+  "niri/window": {
+    "icon": true,
+    "icon-size": 15,
+    "max-length": 30,
+    "tooltip": false,
+  },
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%a %b %d %H:%M:%S %Z %Y}",
+    "tooltip": true,
+    "tooltip-format": "<span size='9pt' font='Sarasa Mono CL'>{calendar}</span>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 4,
+      "on-scroll": 1,
+      "weeks-pos": "right",
+      "format": {
+        "months": "<span color='#fff'><b>{}</b></span>",
+        "days": "<span color='#fff'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#92cafa'><b>{}</b></span>",
+        "today": "<span color='#FF0000'><b>{}</b></span>",
+      },
+    },
+  },
+
+  "network": {
+    "interval": 1,
+    "format": "⭳{bandwidthDownBytes} ⭱{bandwidthUpBytes}",
+    // "format-wifi": " {essid}",
+    // "format-ethernet": " {ifname}",
+    // "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "",
+    // "format-alt": "⭳{bandwidthDownBytes} ⭱{bandwidthUpBytes}",
+    "tooltip": true,
+    "tooltip-format": "IP: {ipaddr}/{cidr}",
+  },
+  "tray": {
+    "spacing": 10,
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {num_connections} {device_battery_percentage}",
+    "on-click": "~/.config/waybar/service.sh bluetooth",
+    "on-click-right": "blueman-manager",
+  },
+  "backlight": {
+    "reverse-scrolling": true,
+    "format-icons": [""],
+    "format": "{icon} {percent}%",
+    "tooltip": false,
+  },
+  "pulseaudio#output": {
+    "reverse-scrolling": true,
+    "format": "{icon} {volume}%",
+    "format-icons": ["", "", ""],
+    "format-muted": "",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol -t 3",
+  },
+  "pulseaudio#input": {
+    "reverse-scrolling": true,
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+    "on-click-right": "pavucontrol -t 4",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%+ --limit 3",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 1%-",
+  },
+}
