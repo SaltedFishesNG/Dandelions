@@ -16,6 +16,13 @@
               Control_R: noop
           menu:
             page_size: 7
+          punctuator:
+            half_shape:
+              ':' : ':'
+              '''''' : ''''''
+              '"' : '"'
+              '`' : '`'
+              '^' : '^'
         ''} $out/share/rime-data/default.yaml
       '';
     in

@@ -8,11 +8,11 @@
     "L+ %h/.config/niri/bg.png          - - - - ${./images/bg.png}"
     "L+ %h/.config/niri/config.kdl      - - - - ${./niri.kdl}"
     "L+ %h/.config/niri/lock.png        - - - - ${./images/lock.png}"
+    "L+ %h/.config/openbox/autostart    - - - - ${./openbox/autostart}"
     "L+ %h/.config/waybar/config.jsonc  - - - - ${./waybar/config.jsonc}"
     "C+ %h/.config/waybar/service.sh 0500 - - - ${./waybar/service.sh}"
     "L+ %h/.config/waybar/style.css     - - - - ${./waybar/style.css}"
 
-    "D  %h/.mozilla/firefox/'Profile Groups' 0755 - - - -"
     "L+ %h/.mozilla/firefox/default/chrome/userChrome.css  - - - - ${./firefox/userChrome.css}"
     "L+ %h/.mozilla/firefox/default/chrome/userContent.css - - - - ${./firefox/userContent.css}"
     "L+ %h/.mozilla/firefox/default/user.js - - - - ${./firefox/user.js}"

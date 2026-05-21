@@ -10,15 +10,9 @@ environment {
     _JAVA_AWT_WM_NONREPARENTING "1"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
 }
-
-cursor {
-    xcursor-theme "Bibata-Modern-Ice"
-    xcursor-size 20
-}
 hotkey-overlay {
     skip-at-startup
 }
-prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
 
 layer-rule {
@@ -55,17 +49,6 @@ window-rule {
     default-window-height { fixed 600; }
 }
 
-window-rule {
-    geometry-corner-radius 10
-    clip-to-geometry true
-}
-window-rule {
-    match is-active=false
-    shadow {
-        off
-    }
-}
-
 layout {
     gaps 10
     center-focused-column "never"
@@ -90,6 +73,35 @@ layout {
     shadow {
         on
         spread 1
+    }
+}
+overview {
+    workspace-shadow {
+        off
+    }
+}
+cursor {
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 20
+}
+prefer-no-csd
+blur {
+    passes 1
+    offset 2
+    noise 0.02
+}
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+    background-effect {
+        blur true
+        xray false
+    }
+}
+window-rule {
+    match is-active=false
+    shadow {
+        off
     }
 }
 
