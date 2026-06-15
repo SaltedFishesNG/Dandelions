@@ -20,7 +20,6 @@
           ncdu
           nh
           nix-output-monitor
-          nixfmt-tree
           p7zip
           parted
           tree
@@ -118,9 +117,9 @@
         };
       };
 
-      services = {
-        envfs.enable = node.schema.software.extra;
-        flatpak.enable = node.schema.software.extra;
+      services = lib.mkIf node.schema.software.extra {
+        envfs.enable = true;
+        flatpak.enable = true;
       };
     };
 }
