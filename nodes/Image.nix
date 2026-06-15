@@ -6,6 +6,7 @@
       "base"
       "extra/disko"
       "network"
+      "secrets"
       "software"
     ];
 

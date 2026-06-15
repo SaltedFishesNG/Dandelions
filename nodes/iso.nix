@@ -10,6 +10,7 @@
       "desktop"
       "font"
       "network"
+      "secrets"
       "software"
       "software/proxy"
     ];

@@ -10,6 +10,7 @@
 
   traits.virtualisation =
     {
+      config,
       lib,
       node,
       pkgs,
@@ -19,34 +20,6 @@
       cfg = node.schema.virtualisation;
     in
     {
-      virtualisation = {
-        libvirtd = {
-          enable = cfg.useLibvirt;
-          qemu = {
-            swtpm.enable = true;
-            vhostUserPackages = [ pkgs.virtiofsd ];
-          };
-          onShutdown = "shutdown";
-        };
-        xen = {
-          enable = cfg.useXen;
-          dom0Resources.memory = cfg.xenDom0Memory;
-          dom0Resources.maxMemory = cfg.xenDom0MaxMemory;
-        };
-        virtualbox.host.enable = cfg.useVbox;
-        lxc = {
-          enable = cfg.useLxc;
-          unprivilegedContainers = true;
-        };
-      };
-
-      users.users.${node.schema.base.username}.extraGroups = [
-        "kvm"
-      ]
-      ++ lib.optionals cfg.useLibvirt [ "libvirtd" ]
-      ++ lib.optionals cfg.useVbox [ "vboxusers" ]
-      ++ lib.optionals cfg.useLxc [ "lxc-user" ];
-
       environment.systemPackages = with pkgs; [
         qemu
         virglrenderer
@@ -55,14 +28,41 @@
         virtiofsd
       ];
 
+      virtualisation = {
+        libvirtd = lib.mkIf cfg.useLibvirt {
+          enable = true;
+          qemu = {
+            swtpm.enable = true;
+            vhostUserPackages = [ pkgs.virtiofsd ];
+          };
+          onShutdown = "shutdown";
+        };
+        xen = lib.mkIf cfg.useXen {
+          enable = true;
+          dom0Resources.memory = cfg.xenDom0Memory;
+          dom0Resources.maxMemory = cfg.xenDom0MaxMemory;
+        };
+        virtualbox.host.enable = lib.mkIf cfg.useVbox true;
+        lxc = lib.mkIf cfg.useLxc {
+          enable = true;
+          unprivilegedContainers = true;
+        };
+      };
+
+      users.users.${node.schema.base.username}.extraGroups = [
+        "kvm"
+      ]
+      ++ lib.optionals config.virtualisation.libvirtd.enable [ "libvirtd" ]
+      ++ lib.optionals config.virtualisation.virtualbox.host.enable [ "vboxusers" ]
+      ++ lib.optionals config.virtualisation.lxc.enable [ "lxc-user" ];
+
       programs.dconf.profiles.user.databases =
         let
           uris =
-            [ ]
-            ++ lib.optionals (!cfg.useLibvirt) [ "qemu:///session" ]
-            ++ lib.optionals cfg.useLibvirt [ "qemu:///system" ]
-            ++ lib.optionals cfg.useXen [ "xen:///" ]
-            ++ lib.optionals (cfg.useLxc && cfg.useLibvirt) [ "lxc:///" ];
+            lib.optionals (!config.virtualisation.libvirtd.enable) [ "qemu:///session" ]
+            ++ lib.optionals config.virtualisation.libvirtd.enable [ "qemu:///system" ]
+            ++ lib.optionals config.virtualisation.xen.enable [ "xen:///" ]
+            ++ lib.optionals config.virtualisation.lxc.enable [ "lxc:///" ];
         in
         [
           {
@@ -71,6 +71,6 @@
           }
         ];
 
-      networking.firewall.trustedInterfaces = lib.mkIf cfg.useLibvirt [ "virbr*" ];
+      networking.firewall.trustedInterfaces = lib.mkIf config.virtualisation.libvirtd.enable [ "virbr*" ];
     };
 }

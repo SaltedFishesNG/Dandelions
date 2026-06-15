@@ -1,4 +1,4 @@
-// https://yalter.github.io/niri/
+// https://niri-wm.github.io/niri/
 
 spawn-at-startup "brightnessctl" "--class=backlight" "set" "50%"
 spawn-at-startup "waybar"

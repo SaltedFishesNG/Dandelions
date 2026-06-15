@@ -14,6 +14,7 @@
       "extra/preservation"
       "font"
       "network"
+      "secrets"
       "software"
       "software/fcitx5"
       "software/game"

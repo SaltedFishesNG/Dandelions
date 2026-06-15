@@ -4,8 +4,6 @@
     nixSubstituters = [ ]; # listOf str
 
     username = "alice"; # str
-    password = null; # null or str
-    hashedPassword = null; # null or str
     authorizedKeys = [ ]; # listOf singleLineStr
 
     useSudo-rs = false; # bool
@@ -50,8 +48,6 @@
 
       users.mutableUsers = false;
       users.users.${cfg.username} = {
-        password = if (cfg.hashedPassword != null || cfg.password != null) then cfg.password else "";
-        hashedPassword = cfg.hashedPassword;
         openssh.authorizedKeys.keys = cfg.authorizedKeys;
         isNormalUser = true;
         extraGroups = [
@@ -77,20 +73,20 @@
         };
         rtkit.enable = true;
         sudo.enable = false;
-        sudo-rs = {
-          enable = cfg.useSudo-rs;
+        sudo-rs = lib.mkIf cfg.useSudo-rs {
+          enable = true;
           execWheelOnly = true;
-          wheelNeedsPassword = false;
+          wheelNeedsPassword = true;
         };
-        tpm2 = {
-          enable = cfg.useTPM2;
+        tpm2 = lib.mkIf cfg.useTPM2 {
+          enable = true;
           pkcs11.enable = true;
           tctiEnvironment.enable = true;
         };
       };
 
-      hardware.bluetooth = {
-        enable = cfg.useBluetooth;
+      hardware.bluetooth = lib.mkIf cfg.useBluetooth {
+        enable = true;
         powerOnBoot = true;
         settings.General.Experimental = true;
       };
@@ -105,7 +101,7 @@
           ports = [ 22 ];
           settings = {
             PasswordAuthentication = false;
-            PermitRootLogin = lib.mkForce "prohibit-password";
+            PermitRootLogin = "prohibit-password";
             X11Forwarding = true;
           };
         };
@@ -123,8 +119,8 @@
         userborn.enable = true;
         dbus.implementation = "broker";
         pulseaudio.enable = false;
-        pipewire = {
-          enable = cfg.useAudio;
+        pipewire = lib.mkIf cfg.useAudio {
+          enable = true;
           alsa.enable = true;
           pulse.enable = true;
         };
@@ -169,7 +165,5 @@
           warn-dirty = false;
         };
       };
-
-      system.stateVersion = lib.mkDefault "26.05";
     };
 }
