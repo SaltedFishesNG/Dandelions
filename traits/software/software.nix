@@ -64,6 +64,7 @@
           dnsutils
           inetutils
           lsof
+          nethogs
           nil
           nixd
           qrencode
