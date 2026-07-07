@@ -5,6 +5,7 @@
 
     "L+ %h/.config/fuzzel/fuzzel.ini    - - - - ${./fuzzel.ini}"
     "L+ %h/.config/mako/config          - - - - ${./mako.ini}"
+    "L+ %h/.config/mpv/mpv.conf         - - - - ${builtins.toFile "mpv.conf" "ytdl-raw-options=cookies-from-browser=firefox"}"
     "L+ %h/.config/niri/bg.png          - - - - ${./images/bg.png}"
     "L+ %h/.config/niri/config.kdl      - - - - ${./niri.kdl}"
     "L+ %h/.config/niri/lock.png        - - - - ${./images/lock.png}"

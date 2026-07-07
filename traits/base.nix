@@ -30,7 +30,10 @@
       console.keyMap = "us";
 
       boot = {
-        kernelParams = [ "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1" ];
+        kernelParams = [
+          "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1"
+          "drm.panic_screen=qr_code"
+        ];
         zfs.forceImportRoot = false;
         binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
           "aarch64-linux"
