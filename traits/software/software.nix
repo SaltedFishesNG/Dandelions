@@ -41,8 +41,7 @@
             ];
           })
           fractal
-          # ladybird
-          # libreoffice
+          ladybird
           mpv
           obs-studio
           (symlinkJoin {
@@ -64,10 +63,12 @@
           dnsutils
           inetutils
           lsof
+          nethogs
           nil
           nixd
           qrencode
           rdap
+          smartmontools
           steam-run-free
         ];
 
@@ -82,6 +83,7 @@
           config = {
             core.autocrlf = "input";
             core.editor = "vim";
+            log.date = "iso8601";
             merge.autoStash = true;
             pull.autoStash = true;
             pull.rebase = true;

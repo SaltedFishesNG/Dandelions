@@ -11,4 +11,15 @@ config.font = wezterm.font_with_fallback {
     'Sarasa Mono CL',
 }
 
+config.keys = {
+    {
+        key = 'Backspace',
+        mods = 'CTRL',
+        action = wezterm.action.SendKey {
+            key = 'w',
+            mods = 'CTRL',
+        },
+    },
+}
+
 return config
