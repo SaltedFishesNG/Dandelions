@@ -119,9 +119,6 @@
         };
       };
 
-      services = lib.mkIf node.schema.software.extra {
-        envfs.enable = true;
-        flatpak.enable = true;
-      };
+      services.flatpak.enable = lib.mkIf node.schema.software.extra true;
     };
 }
