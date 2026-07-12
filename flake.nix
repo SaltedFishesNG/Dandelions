@@ -17,6 +17,7 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.pre-commit.follows = "";
     };
     nixy.url = "github:cuskiy/nixy";
     preservation.url = "github:nix-community/preservation";
