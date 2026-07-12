@@ -1,7 +1,6 @@
 {
   schema.base = {
     useLix = false; # bool
-    nixSubstituters = [ ]; # listOf str
 
     username = "alice"; # str
     authorizedKeys = [ ]; # listOf singleLineStr
@@ -14,7 +13,6 @@
 
   traits.base =
     {
-      config,
       lib,
       node,
       pkgs,
@@ -30,10 +28,7 @@
       console.keyMap = "us";
 
       boot = {
-        kernelParams = [
-          "systemd.setenv=SYSTEMD_SULOGIN_FORCE=1"
-          "drm.panic_screen=qr_code"
-        ];
+        kernelParams = [ "drm.panic_screen=qr_code" ];
         zfs.forceImportRoot = false;
         binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
           "aarch64-linux"
@@ -46,6 +41,7 @@
         loader.systemd-boot.configurationLimit = 25;
         loader.efi.canTouchEfiVariables = true;
       };
+      systemd.enableEmergencyMode = false;
       system.nixos-init.enable = true;
       system.etc.overlay.enable = true;
 
@@ -136,7 +132,7 @@
         package = if cfg.useLix then pkgs.lixPackageSets.stable.lix else pkgs.nixVersions.latest;
         channel.enable = false;
         settings = {
-          allowed-users = [ "root" ] ++ config.nix.settings.trusted-users;
+          allowed-users = [ "@wheel" ];
           auto-allocate-uids = true;
           auto-optimise-store = true;
           builders-use-substitutes = true;
@@ -154,16 +150,8 @@
           ];
           pure-eval = true;
           stalled-download-timeout = 15;
-          substituters = cfg.nixSubstituters ++ [
-            "https://nix-community.cachix.org"
-          ];
-          trusted-public-keys = [
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-          ];
-          trusted-users = [
-            "${cfg.username}"
-            "@wheel"
-          ];
+          substituters = [ "https://nix-community.cachix.org" ];
+          trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
           use-cgroups = true;
           warn-dirty = false;
         };
