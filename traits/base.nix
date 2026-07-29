@@ -62,7 +62,10 @@
         shellAbbrs = {
           sudo = lib.mkIf (!cfg.useSudo-rs) "doas";
         };
-        interactiveShellInit = "set fish_color_command blue";
+        interactiveShellInit = ''
+          set fish_color_command blue
+          bind ctrl-w backward-kill-bigword
+        '';
       };
 
       security = {

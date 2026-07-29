@@ -56,12 +56,7 @@
             # "Groups/0/Items/1".Name = "pinyin";
           };
           settings.globalOptions = {
-            "Hotkey/TriggerKeys"."0" = "Control+space";
-            "Hotkey/ActivateKeys"."0" = "VoidSymbol";
             "Hotkey/AltTriggerKeys"."0" = "VoidSymbol";
-            "Hotkey/DeactivateKeys"."0" = "VoidSymbol";
-            "Hotkey/EnumerateGroupBackwardKeys"."0" = "VoidSymbol";
-            "Hotkey/EnumerateGroupForwardKeys"."0" = "VoidSymbol";
           };
           ignoreUserConfig = false; # Rime will use .local/share/fcitx5/rime/build
         };
