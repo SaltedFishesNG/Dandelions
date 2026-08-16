@@ -9,7 +9,6 @@
     {
       environment.systemPackages = with pkgs; [
         adw-gtk3
-        adwaita-icon-theme
         bibata-cursors
         brightnessctl
         file-roller
@@ -19,8 +18,6 @@
         nautilus
         papirus-icon-theme
         pavucontrol
-        qgnomeplatform
-        qgnomeplatform-qt6
         swaybg
         swayidle
         swaylock
@@ -45,6 +42,8 @@
         nm-applet.enable = config.networking.networkmanager.enable;
         seahorse.enable = config.services.gnome.gnome-keyring.enable;
       };
+
+      security.soteria.enable = true;
 
       services = {
         blueman.enable = config.hardware.bluetooth.enable;

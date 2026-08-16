@@ -44,14 +44,7 @@
           ladybird
           mpv
           obs-studio
-          (symlinkJoin {
-            name = "qbittorrent";
-            paths = [ qbittorrent ];
-            buildInputs = [ makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/qbittorrent --set QT_QPA_PLATFORMTHEME "gtk3"
-            '';
-          })
+          qbittorrent
           signal-desktop
           thunderbird
           tor-browser
