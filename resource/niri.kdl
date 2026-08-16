@@ -6,7 +6,7 @@ spawn-sh-at-startup "swaybg -i ~/.config/niri/bg.png -m fill"
 spawn-sh-at-startup "swayidle -w timeout 365 'niri msg action power-off-monitors' timeout 600 'systemctl suspend-then-hibernate' before-sleep 'playerctl pause -a' before-sleep 'swaylock -Fi ~/.config/niri/lock.png'"
 
 environment {
-    QT_QPA_PLATFORMTHEME "gnome"
+    QT_QPA_PLATFORMTHEME "gtk3"
     _JAVA_AWT_WM_NONREPARENTING "1"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
 }
@@ -35,7 +35,7 @@ window-rule {
     open-floating true
 }
 window-rule {
-    match app-id=".blueman-manager-wrapped"
+    match app-id="blueman-manager"
     match app-id="nm-applet"
     match app-id="org.pulseaudio.pavucontrol"
     match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
@@ -126,7 +126,7 @@ binds {
 
     Print      { screenshot; }
     Ctrl+Print { screenshot-screen; }
-    Alt+Print  { screenshot-window; }
+    Shift+Print  { screenshot-window; }
 
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
