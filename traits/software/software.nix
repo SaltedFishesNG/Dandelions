@@ -30,18 +30,9 @@
         ]
         ++ lib.optionals node.schema.software.extra [
           # (bottles.override { removeWarningPopup = true; })
-          (chromium.override {
-            commandLineArgs = [
-              # Four years ago, someone tried enabling touchpad history navigation
-              # as the default in Chromium on Linux.
-              # To this day, it can still only be enabled in this way.
-              # https://chromium-review.googlesource.com/c/chromium/src/+/3955902
-              "--enable-features=TouchpadOverscrollHistoryNavigation,WaylandWindowDecorations"
-              "--ozone-platform-hint=auto"
-            ];
-          })
+          chromium
           fractal
-          ladybird
+          # ladybird
           mpv
           obs-studio
           qbittorrent
@@ -66,10 +57,7 @@
         ];
 
       programs = {
-        gnupg.agent = {
-          enable = true;
-          pinentryPackage = pkgs.pinentry-tty;
-        };
+        gnupg.agent.enable = true;
         git = {
           enable = true;
           package = pkgs.gitFull;
