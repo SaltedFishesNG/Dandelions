@@ -30,6 +30,7 @@
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
         ];
+        isLaptop = true;
       };
       extra.disko = {
         device = "/dev/null";

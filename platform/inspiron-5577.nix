@@ -34,14 +34,16 @@
     package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
     open = false;
     modesetting.enable = true;
+    nvidiaSettings = false;
     prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
+      offload.enable = true;
     };
   };
   services.xserver.videoDrivers = [ "nvidia" ];
+  nixpkgs.config.allowUnfreePackages = [
+    "nvidia-x11"
+    "nvidia-kernel-modules"
+  ];
 }

@@ -1,17 +1,12 @@
 {
   traits.unfree =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
-      nixpkgs.config.allowUnfreePredicate =
-        pkg:
-        builtins.elem (lib.getName pkg) [
-          # "ida-pro"
-          "nvidia-settings"
-          "nvidia-x11"
-          "nvidia-kernel-modules"
-          "steam"
-          "steam-unwrapped"
-        ];
+      nixpkgs.config.allowUnfreePackages = [
+        # "ida-pro"
+        "steam"
+        "steam-unwrapped"
+      ];
 
       environment.systemPackages = [
         # (pkgs.callPackage ./_pkgs/ida-pro.nix { })
@@ -19,7 +14,6 @@
 
       programs.steam = {
         enable = true;
-        package = pkgs.steam.override { extraArgs = "-system-composer"; };
         gamescopeSession.enable = true;
         extest.enable = true;
         remotePlay.openFirewall = true;

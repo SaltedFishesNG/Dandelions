@@ -19,7 +19,7 @@
         useSudo-rs = true;
         useTPM2 = false;
         useBluetooth = false;
-        useAudio = false;
+        enablePipewire = false;
       };
       extra.disko = {
         device = "/dev/null";

@@ -49,7 +49,7 @@
         blueman.enable = config.hardware.bluetooth.enable;
         greetd = {
           enable = true;
-          settings.default_session.command = "${lib.getExe pkgs.tuigreet}";
+          settings.default_session.command = "${lib.getExe pkgs.tuigreet} --no-config";
           useTextGreeter = true;
         };
         gvfs.enable = true;

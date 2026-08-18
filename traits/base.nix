@@ -5,10 +5,11 @@
     username = "alice"; # str
     authorizedKeys = [ ]; # listOf singleLineStr
 
+    enablePipewire = true; # bool
+    isLaptop = false; # bool
+    useBluetooth = true; # bool
     useSudo-rs = false; # bool
     useTPM2 = true; # bool
-    useBluetooth = true; # bool
-    useAudio = true; # bool
   };
 
   traits.base =
@@ -30,11 +31,6 @@
       boot = {
         kernelParams = [ "drm.panic_screen=qr_code" ];
         zfs.forceImportRoot = false;
-        binfmt.emulatedSystems = builtins.filter (s: s != pkgs.stdenv.hostPlatform.system) [
-          "aarch64-linux"
-          "riscv64-linux"
-          "x86_64-linux"
-        ];
         plymouth.enable = false;
         initrd.systemd.enable = true;
         loader.systemd-boot.enable = lib.mkDefault true;
@@ -49,12 +45,7 @@
       users.users.${cfg.username} = {
         openssh.authorizedKeys.keys = cfg.authorizedKeys;
         isNormalUser = true;
-        extraGroups = [
-          "audio"
-          "input"
-          "video"
-          "wheel"
-        ];
+        extraGroups = [ "wheel" ];
         shell = pkgs.fish;
       };
       programs.fish = {
@@ -73,7 +64,6 @@
           enable = true;
           extraConfig = "permit persist keepenv :wheel";
         };
-        rtkit.enable = true;
         sudo.enable = false;
         sudo-rs = lib.mkIf cfg.useSudo-rs {
           enable = true;
@@ -94,7 +84,7 @@
       };
 
       services = {
-        logind.settings.Login = {
+        logind.settings.Login = lib.mkIf cfg.isLaptop {
           HandlePowerKey = "hibernate";
           HandleLidSwitch = "suspend-then-hibernate";
         };
@@ -121,7 +111,7 @@
         userborn.enable = true;
         dbus.implementation = "broker";
         pulseaudio.enable = false;
-        pipewire = lib.mkIf cfg.useAudio {
+        pipewire = lib.mkIf cfg.enablePipewire {
           enable = true;
           alsa.enable = true;
           pulse.enable = true;
@@ -132,7 +122,7 @@
       documentation.man.cache.enable = false; # Slow build due to fish enabling caches
 
       nix = {
-        package = if cfg.useLix then pkgs.lixPackageSets.stable.lix else pkgs.nixVersions.latest;
+        package = if cfg.useLix then pkgs.lixPackageSets.latest.lix else pkgs.nixVersions.latest;
         channel.enable = false;
         settings = {
           allowed-users = [ "@wheel" ];
