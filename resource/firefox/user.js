@@ -1,3 +1,10 @@
+// Thunderbird
+user_pref("mailnews.wraplength", 0);
+user_pref("mail.default_send_format", 1);
+user_pref("mail.wrap_long_lines", false);
+user_pref("plain_text.wrap_long_lines", false);
+user_pref("mailnews.headers.sendUserAgent", false);
+
 // userChrome.css & userContent.css
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 

@@ -45,6 +45,7 @@
       users.users.${cfg.username} = {
         openssh.authorizedKeys.keys = cfg.authorizedKeys;
         isNormalUser = true;
+        autoSubUidGidRange = true;
         extraGroups = [ "wheel" ];
         shell = pkgs.fish;
       };
