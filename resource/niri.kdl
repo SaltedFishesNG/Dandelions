@@ -1,8 +1,7 @@
 // https://niri-wm.github.io/niri/
 
-spawn-at-startup "brightnessctl" "--class=backlight" "set" "50%"
 spawn-at-startup "waybar"
-spawn-sh-at-startup "swaybg -i ~/.config/niri/bg.png -m fill"
+spawn-at-startup "swaybg" "--image=Pictures/background.png" "--mode=fill"
 spawn-sh-at-startup "swayidle -w timeout 365 'niri msg action power-off-monitors' timeout 600 'systemctl suspend-then-hibernate' before-sleep 'playerctl pause -a' before-sleep 'swaylock -Fi ~/.config/niri/lock.png'"
 
 environment {
@@ -86,9 +85,9 @@ cursor {
 }
 prefer-no-csd
 blur {
-    passes 1
+    passes 2
     offset 2
-    noise 0.02
+    noise 0.0
 }
 window-rule {
     geometry-corner-radius 10
@@ -122,7 +121,7 @@ input {
 binds {
     Mod+T       { spawn "wezterm"; }
     Mod+D       { spawn "fuzzel"; }
-    Super+Alt+L { spawn "swaylock" "-Fi" "~/.config/niri/lock.png"; }
+    Super+Alt+L { spawn "swaylock" "-F" "--image=Pictures/lock.png"; }
 
     Print      { screenshot; }
     Ctrl+Print { screenshot-screen; }
