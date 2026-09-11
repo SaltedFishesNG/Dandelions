@@ -20,7 +20,6 @@
       "software/game"
       "software/hack"
       "software/proxy"
-      "unfree"
       "virtualisation"
     ];
 
@@ -47,6 +46,7 @@
       software.extra = true;
       virtualisation = {
         useLibvirt = true;
+        usePodman = true;
         useXen = false;
       };
     };

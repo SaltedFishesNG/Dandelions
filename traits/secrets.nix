@@ -6,7 +6,7 @@
       system.stateVersion = "26.11";
       users.users.${node.schema.base.username}.password = "";
       # users.users.${node.schema.base.username}.hashedPassword = "";
-      preservation.preserveAt."/persist".users.${node.schema.base.username}.directories = [ ];
-      environment.systemPackages = with pkgs; [ ];
+      # preservation.preserveAt."/persist".users.${node.schema.base.username}.directories = [ ];
+      # environment.systemPackages = with pkgs; [ ];
     };
 }

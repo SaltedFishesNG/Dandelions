@@ -1,11 +1,11 @@
 {
   schema.virtualisation = {
     useLibvirt = false; # bool
+    useLxc = false; # bool
+    usePodman = false; # bool
     useXen = false; # bool
     xenDom0Memory = 10000; # ints.unsigned
     xenDom0MaxMemory = 10000; # ints.unsigned
-    useVbox = false; # bool
-    useLxc = false; # bool
   };
 
   traits.virtualisation =
@@ -30,6 +30,18 @@
       ];
 
       virtualisation = {
+        containers.enable = true;
+        containers.registries.settings = {
+          unqualified-search-registries = [
+            "quay.io"
+            "docker.io"
+          ];
+          registry = [
+            { location = "quay.io"; }
+            { location = "docker.io"; }
+          ];
+        };
+
         libvirtd = lib.mkIf cfg.useLibvirt {
           enable = true;
           qemu = {
@@ -38,15 +50,22 @@
           };
           onShutdown = "shutdown";
         };
+
+        lxc = lib.mkIf cfg.useLxc {
+          enable = true;
+          unprivilegedContainers = true;
+        };
+
+        podman = lib.mkIf cfg.usePodman {
+          enable = true;
+          dockerCompat = true;
+          dockerSocket.enable = true;
+        };
+
         xen = lib.mkIf cfg.useXen {
           enable = true;
           dom0Resources.memory = cfg.xenDom0Memory;
           dom0Resources.maxMemory = cfg.xenDom0MaxMemory;
-        };
-        virtualbox.host.enable = lib.mkIf cfg.useVbox true;
-        lxc = lib.mkIf cfg.useLxc {
-          enable = true;
-          unprivilegedContainers = true;
         };
       };
 
