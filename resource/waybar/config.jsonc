@@ -33,7 +33,6 @@
     "icon": true,
     "icon-size": 15,
     "max-length": 30,
-    "tooltip": false,
   },
 
   "clock": {

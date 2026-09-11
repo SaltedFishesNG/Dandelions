@@ -1,7 +1,6 @@
 {
   lib,
   modulesPath,
-  node,
   pkgs,
   ...
 }:
@@ -17,9 +16,8 @@
 
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
   system.nixos-init.enable = lib.mkForce false;
-  services.greetd.settings.default_session.command = lib.mkForce ''
-    ${lib.getExe pkgs.tuigreet} -g "The username is '${node.schema.base.username}' or 'root'."
-  '';
+  services.greetd.settings.default_session.command =
+    lib.mkForce "${lib.getExe pkgs.tuigreet} --user nixos";
 
   environment.systemPackages = [ pkgs.sbctl ];
 }

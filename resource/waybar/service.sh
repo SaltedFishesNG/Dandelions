@@ -8,10 +8,15 @@ case "$1" in
         dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
         dconf write /org/gnome/desktop/interface/gtk-theme "'adw-gtk3'"
         dconf write /org/gnome/desktop/interface/icon-theme "'Papirus'"
+        rm ~/.config/gtk-4.0/settings.ini
+        systemctl --user restart polkit-soteria.service
     else
         dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
         dconf write /org/gnome/desktop/interface/gtk-theme "'adw-gtk3-dark'"
         dconf write /org/gnome/desktop/interface/icon-theme "'Papirus-Dark'"
+        mkdir -p ~/.config/gtk-4.0
+        echo -e "[Settings]\ngtk-application-prefer-dark-theme=1" | tee ~/.config/gtk-4.0/settings.ini
+        systemctl --user restart polkit-soteria.service
     fi
     ;;
   bluetooth)
