@@ -1,8 +1,8 @@
 // https://niri-wm.github.io/niri/
 
-spawn-at-startup "waybar"
 spawn-at-startup "swaybg" "--image=Pictures/background.png" "--mode=fill"
-spawn-sh-at-startup "swayidle -w timeout 365 'niri msg action power-off-monitors' timeout 600 'systemctl suspend-then-hibernate' before-sleep 'playerctl pause -a' before-sleep 'swaylock -Fi ~/.config/niri/lock.png'"
+spawn-at-startup "systemctl" "start" "--user" "swayidle" "waybar" "nm-applet" "app-blueman@autostart"
+spawn-at-startup "systemctl" "restart" "--user" "app-org.fcitx.Fcitx5@autostart"
 
 environment {
     QT_QPA_PLATFORMTHEME "gtk3"

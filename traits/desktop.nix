@@ -19,7 +19,6 @@
         papirus-icon-theme
         pavucontrol
         swaybg
-        swayidle
         swaylock
         waybar
         waypipe
@@ -59,6 +58,23 @@
           enable = true;
           displayManager.startx.enable = true;
           windowManager.openbox.enable = true;
+        };
+      };
+
+      systemd.user.services.swayidle = {
+        description = "Idle manager for Wayland";
+        partOf = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = ''
+            ${lib.getExe pkgs.swayidle} -w  \
+              timeout 365 '${lib.getExe pkgs.niri} msg action power-off-monitors' \
+              timeout 600 '${pkgs.systemd}/bin/systemctl suspend-then-hibernate' \
+              before-sleep '${lib.getExe pkgs.playerctl} pause -a' \
+              before-sleep '${lib.getExe pkgs.swaylock} -Fi ~/Pictures/lock.png '
+          '';
+          Restart = "on-failure";
         };
       };
 
