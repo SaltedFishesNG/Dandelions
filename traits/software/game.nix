@@ -1,4 +1,8 @@
 {
+  schema.software.game = {
+    ASF.enable = false; # bool
+  };
+
   traits."software/game" =
     { node, pkgs, ... }:
     {
@@ -26,7 +30,7 @@
       };
 
       services.archisteamfarm = {
-        enable = false;
+        enable = node.schema.software.game.ASF.enable;
         web-ui.enable = true;
       };
 

@@ -19,7 +19,6 @@
   outputs =
     { nixpkgs, nixy, ... }@inputs:
     let
-      # nixpkgs-patched = system: import ./nixpkgs-patch.nix { inherit nixpkgs system; };
       cluster = nixy.eval { imports = [ ./nodes ] ++ [ ./traits ]; };
       mkSystem =
         system: node:
@@ -27,14 +26,13 @@
           modules = [ node.module ];
           specialArgs = { inherit inputs system node; };
         };
-      forAllSystems = f: nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed f;
     in
     {
       nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkSystem null) cluster.nodes;
-      packages = forAllSystems (system: {
+      packages = builtins.mapAttrs (system: pkgs: {
         diskoImage = (mkSystem system cluster.nodes.Image).config.system.build.diskoImages;
         iso = (mkSystem system cluster.nodes.iso).config.system.build.isoImage;
-      });
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+      }) nixpkgs.legacyPackages;
+      formatter = builtins.mapAttrs (system: pkgs: pkgs.nixfmt-tree) nixpkgs.legacyPackages;
     };
 }

@@ -1,9 +1,9 @@
 {
   schema.virtualisation = {
-    useLibvirt = false; # bool
-    useLxc = false; # bool
-    usePodman = false; # bool
-    useXen = false; # bool
+    libvirt.enable = false; # bool
+    lxc.enable = false; # bool
+    podman.enable = false; # bool
+    xen.enable = false; # bool
     xenDom0Memory = 10000; # ints.unsigned
     xenDom0MaxMemory = 10000; # ints.unsigned
   };
@@ -42,7 +42,7 @@
           ];
         };
 
-        libvirtd = lib.mkIf cfg.useLibvirt {
+        libvirtd = lib.mkIf cfg.libvirt.enable {
           enable = true;
           qemu = {
             swtpm.enable = true;
@@ -51,18 +51,18 @@
           onShutdown = "shutdown";
         };
 
-        lxc = lib.mkIf cfg.useLxc {
+        lxc = lib.mkIf cfg.lxc.enable {
           enable = true;
           unprivilegedContainers = true;
         };
 
-        podman = lib.mkIf cfg.usePodman {
+        podman = lib.mkIf cfg.podman.enable {
           enable = true;
           dockerCompat = true;
           dockerSocket.enable = true;
         };
 
-        xen = lib.mkIf cfg.useXen {
+        xen = lib.mkIf cfg.xen.enable {
           enable = true;
           dom0Resources.memory = cfg.xenDom0Memory;
           dom0Resources.maxMemory = cfg.xenDom0MaxMemory;

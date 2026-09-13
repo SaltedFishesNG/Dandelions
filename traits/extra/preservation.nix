@@ -33,23 +33,14 @@
           "Pictures"
           "Projects"
 
-          {
-            directory = ".gnupg";
-            mode = "0700";
-          }
-          {
-            directory = ".ssh";
-            mode = "0700";
-          }
+          ({ directory = ".gnupg"; } // { mode = "0700"; })
+          ({ directory = ".ssh"; } // { mode = "0700"; })
           ".local/share/PrismLauncher"
           ".mozilla/firefox/default"
         ]
         ++ lib.optionals (config.i18n.inputMethod.type == "fcitx5") [ ".local/share/fcitx5/rime/build" ]
         ++ lib.optionals config.programs.steam.enable [ ".local/share/Steam" ]
-        ++ lib.optionals config.services.flatpak.enable [
-          ".var/app"
-          ".local/share/flatpak"
-        ]
+        ++ lib.optionals config.services.flatpak.enable ([ ".var/app" ] ++ [ ".local/share/flatpak" ])
         ++ lib.optionals config.services.gnome.gnome-keyring.enable [ ".local/share/keyrings" ]
         ++ lib.optionals node.schema.software.extra [
           ".config/Signal"

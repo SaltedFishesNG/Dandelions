@@ -1,17 +1,30 @@
 {
+  schema.software.hack = {
+    extra = false; # bool
+  };
+
   traits."software/hack" =
-    { node, pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [
-        # aircrack-ng
-        # (cutter.withPlugins (ps: with ps; [jsdec rz-ghidra sigdb]))
-        # ghidra-bin
-        # nikto
-        nmap
-        # nuclei
-        (proxmark3.override { hardwarePlatform = "PM3GENERIC"; })
-        wireshark
-      ];
+      lib,
+      node,
+      pkgs,
+      ...
+    }:
+    {
+      environment.systemPackages =
+        with pkgs;
+        [
+          nmap
+          (proxmark3.override { hardwarePlatform = "PM3GENERIC"; })
+          wireshark
+        ]
+        ++ lib.optionals node.schema.software.hack.extra [
+          aircrack-ng
+          (cutter.withPlugins (ps: with ps; [ jsdec ] ++ [ rz-ghidra ] ++ [ sigdb ]))
+          ghidra-bin
+          nikto
+          nuclei
+        ];
 
       programs.wireshark = {
         enable = true;

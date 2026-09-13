@@ -45,9 +45,9 @@
       font.extra = true;
       software.extra = true;
       virtualisation = {
-        useLibvirt = true;
-        usePodman = true;
-        useXen = false;
+        libvirt.enable = true;
+        podman.enable = true;
+        xen.enable = false;
       };
     };
   };

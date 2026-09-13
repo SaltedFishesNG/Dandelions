@@ -16,10 +16,10 @@
         authorizedKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIObSiBahejD/fe1MOfbrW1XF29t/4yRAPcwphHEFVqET main@saltedfishes.com"
         ];
-        useSudo-rs = true;
-        useTPM2 = false;
-        useBluetooth = false;
-        enablePipewire = false;
+        bluetooth.enable = false;
+        pipewire.enable = false;
+        sudo-rs.enable = true;
+        tpm2.enable = false;
       };
       extra.disko = {
         device = "/dev/null";
@@ -29,7 +29,7 @@
       };
       network = {
         hostname = "Image";
-        useWireless = false;
+        wireless.enable = false;
       };
       software.extra = false;
     };

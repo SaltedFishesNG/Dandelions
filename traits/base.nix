@@ -1,15 +1,15 @@
 {
   schema.base = {
-    useLix = false; # bool
+    lix.enable = false; # bool
 
     username = "alice"; # str
     authorizedKeys = [ ]; # listOf singleLineStr
 
-    enablePipewire = true; # bool
+    bluetooth.enable = true; # bool
     isLaptop = false; # bool
-    useBluetooth = true; # bool
-    useSudo-rs = false; # bool
-    useTPM2 = true; # bool
+    pipewire.enable = true; # bool
+    sudo-rs.enable = false; # bool
+    tpm2.enable = true; # bool
   };
 
   traits.base =
@@ -52,7 +52,7 @@
       programs.fish = {
         enable = true;
         shellAbbrs = {
-          sudo = lib.mkIf (!cfg.useSudo-rs) "doas";
+          sudo = lib.mkIf (!cfg.sudo-rs.enable) "doas";
         };
         interactiveShellInit = ''
           set fish_color_command blue
@@ -66,19 +66,19 @@
           extraConfig = "permit persist keepenv :wheel";
         };
         sudo.enable = false;
-        sudo-rs = lib.mkIf cfg.useSudo-rs {
+        sudo-rs = lib.mkIf cfg.sudo-rs.enable {
           enable = true;
           execWheelOnly = true;
           wheelNeedsPassword = true;
         };
-        tpm2 = lib.mkIf cfg.useTPM2 {
+        tpm2 = lib.mkIf cfg.tpm2.enable {
           enable = true;
           pkcs11.enable = true;
           tctiEnvironment.enable = true;
         };
       };
 
-      hardware.bluetooth = lib.mkIf cfg.useBluetooth {
+      hardware.bluetooth = lib.mkIf cfg.bluetooth.enable {
         enable = true;
         powerOnBoot = true;
         settings.General.Experimental = true;
@@ -111,8 +111,7 @@
         };
         userborn.enable = true;
         dbus.implementation = "broker";
-        pulseaudio.enable = false;
-        pipewire = lib.mkIf cfg.enablePipewire {
+        pipewire = lib.mkIf cfg.pipewire.enable {
           enable = true;
           alsa.enable = true;
           pulse.enable = true;
@@ -123,7 +122,7 @@
       documentation.man.cache.enable = false; # Slow build due to fish enabling caches
 
       nix = {
-        package = if cfg.useLix then pkgs.lixPackageSets.latest.lix else pkgs.nixVersions.latest;
+        package = if cfg.lix.enable then pkgs.lixPackageSets.latest.lix else pkgs.nixVersions.latest;
         channel.enable = false;
         settings = {
           allowed-users = [ "@wheel" ];
@@ -137,8 +136,8 @@
             "flakes"
             "nix-command"
           ]
-          ++ lib.optionals cfg.useLix [ "pipe-operator" ]
-          ++ lib.optionals (!cfg.useLix) [
+          ++ lib.optionals cfg.lix.enable [ "pipe-operator" ]
+          ++ lib.optionals (!cfg.lix.enable) [
             "ca-derivations"
             "pipe-operators"
           ];

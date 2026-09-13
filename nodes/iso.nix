@@ -17,7 +17,7 @@
     schema = {
       base = {
         username = "nixos";
-        useSudo-rs = true;
+        sudo-rs.enable = true;
       };
       font.extra = false;
       network = {

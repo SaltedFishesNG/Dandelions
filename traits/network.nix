@@ -2,8 +2,8 @@
   schema.network = {
     hostname = "NixOS"; # str
     machineId = "00000000"; # str
-    useWireless = true; # bool
-    useNetworkManager = true; # bool
+    networkmanager.enable = true; # bool
+    wireless.enable = true; # bool
   };
 
   traits.network =
@@ -21,13 +21,13 @@
         hostName = lib.mkDefault cfg.hostname;
         hostId = cfg.machineId;
         dhcpcd.enable = false;
-        networkmanager.enable = cfg.useNetworkManager;
-        networkmanager.wifi.backend = lib.mkIf cfg.useWireless "iwd";
-        wireless.iwd.enable = cfg.useWireless;
-        useNetworkd = !cfg.useNetworkManager;
-        useDHCP = !cfg.useNetworkManager;
+        networkmanager.enable = cfg.networkmanager.enable;
+        networkmanager.wifi.backend = lib.mkIf cfg.wireless.enable "iwd";
+        wireless.iwd.enable = cfg.wireless.enable;
+        useNetworkd = !cfg.networkmanager.enable;
+        useDHCP = !cfg.networkmanager.enable;
       };
-      systemd.network.enable = !cfg.useNetworkManager;
+      systemd.network.enable = !cfg.networkmanager.enable;
 
       networking.resolvconf.enable = false;
       services.resolved.enable = false;
