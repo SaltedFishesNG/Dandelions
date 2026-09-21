@@ -1,0 +1,9 @@
+Install NixOS
+    $ git clone <repo>
+    $ cd Dandelions
+    $ git checkout excludes-nixy
+    $ sudo nixos-generate-config --no-filesystems --show-hardware-config > ./hardware.nix
+    $ vim ./modules/disko.nix
+    $ sudo nix-shell -p disko --run "disko -m destroy,format,mount ./modules/disko.nix"
+    $ sudo nixos-install --flake .#NixOS
+    $ reboot
