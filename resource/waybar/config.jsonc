@@ -6,17 +6,6 @@
   "height": 30,
 
   "modules-left": ["niri/workspaces", "custom/theme", "niri/window"],
-  "modules-center": ["clock"],
-  "modules-right": [
-    "network",
-    "tray",
-    // "bluetooth",
-    "backlight",
-    "pulseaudio#output",
-    "pulseaudio#input",
-    "battery",
-  ],
-
   "niri/workspaces": {
     "format": "{icon}",
     "format-icons": {
@@ -26,7 +15,7 @@
   },
   "custom/theme": {
     "format": "",
-    "on-click": "~/.config/waybar/service.sh theme",
+    "on-click": "~/.config/waybar/theme.sh",
     "tooltip": false,
   },
   "niri/window": {
@@ -35,16 +24,16 @@
     "max-length": 30,
   },
 
+  "modules-center": ["clock"],
   "clock": {
     "interval": 1,
-    "format": "{:%a %b %d %H:%M:%S %Z %Y}",
+    "format": "{:%a %b %d %H:%M:%S}",
     "tooltip": true,
-    "tooltip-format": "<span size='9pt' font='Sarasa Mono CL'>{calendar}</span>",
+    "tooltip-format": "<span size='9pt'>{calendar}</span>",
     "calendar": {
       "mode": "year",
       "mode-mon-col": 4,
-      "on-scroll": 1,
-      "weeks-pos": "right",
+      "weeks-pos": "left",
       "format": {
         "months": "<span color='#fff'><b>{}</b></span>",
         "days": "<span color='#fff'><b>{}</b></span>",
@@ -55,25 +44,26 @@
     },
   },
 
+  "modules-right": [
+    "network",
+    "tray",
+    "backlight",
+    "pulseaudio#output",
+    "pulseaudio#input",
+    "battery",
+  ],
   "network": {
     "interval": 1,
-    "format": "⭳{bandwidthDownBytes} ⭱{bandwidthUpBytes}",
-    // "format-wifi": " {essid}",
-    // "format-ethernet": " {ifname}",
-    // "format-linked": "{ifname} (No IP)",
+    "format-wifi": " {essid}",
+    "format-ethernet": " {ifname}",
+    "format-linked": "{ifname} (No IP)",
     "format-disconnected": "",
-    // "format-alt": "⭳{bandwidthDownBytes} ⭱{bandwidthUpBytes}",
+    "format-alt": "⭳{bandwidthDownBytes} ⭱{bandwidthUpBytes}",
     "tooltip": true,
     "tooltip-format": "IP: {ipaddr}/{cidr}",
   },
   "tray": {
     "spacing": 10,
-  },
-  "bluetooth": {
-    "format": " {status}",
-    "format-connected": " {num_connections} {device_battery_percentage}",
-    "on-click": "~/.config/waybar/service.sh bluetooth",
-    "on-click-right": "blueman-manager",
   },
   "backlight": {
     "reverse-scrolling": true,
