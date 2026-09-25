@@ -22,10 +22,7 @@
       ++ lib.optionals config.virtualisation.libvirtd.enable [ "/var/lib/libvirt" ];
 
       preservation.preserveAt."/persist".users.${node.schema.base.username} = {
-        files = [
-          ".local/share/fish/fish_history"
-          ".config/nix/nix.conf"
-        ];
+        files = [ ".local/share/fish/fish_history" ];
         directories = [
           "Documents"
           "Downloads"

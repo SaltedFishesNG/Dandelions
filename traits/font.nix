@@ -18,7 +18,6 @@
           [
             fira-code
             font-awesome
-            iosevka
             noto-fonts
             noto-fonts-cjk-sans
             noto-fonts-cjk-serif
@@ -26,25 +25,16 @@
             sarasa-gothic
           ]
           ++ lib.optionals node.schema.font.extra [
+            iosevka
             jetbrains-mono
             maple-mono.NF-CN
             nerd-fonts.fira-code
             source-code-pro
           ];
         fontconfig.defaultFonts = {
-          serif = [
-            "Noto Serif"
-            "Noto Serif CJK TC"
-          ];
-          sansSerif = [
-            "Noto Sans"
-            "Noto Sans CJK TC"
-          ];
-          monospace = [
-            "Fira Code"
-            "Iosevka"
-            "Sarasa Mono CL"
-          ];
+          serif = [ "Noto Serif" ] ++ [ "Noto Serif CJK TC" ];
+          sansSerif = [ "Noto Sans" ] ++ [ "Noto Sans CJK TC" ];
+          monospace = [ "Fira Code" ] ++ [ "Sarasa Mono CL" ];
           emoji = [ "Noto Color Emoji" ];
         };
       };
