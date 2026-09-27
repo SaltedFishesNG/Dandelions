@@ -14,6 +14,7 @@
 
   traits.base =
     {
+      inputs,
       lib,
       node,
       pkgs,
@@ -141,6 +142,7 @@
             "ca-derivations"
             "pipe-operators"
           ];
+          flake-registry = "${inputs.flake-registry}/flake-registry.json";
           pure-eval = true;
           stalled-download-timeout = 15;
           substituters = [ "https://nix-community.cachix.org" ];
