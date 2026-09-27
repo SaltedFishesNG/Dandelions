@@ -2,28 +2,8 @@
   traits."software/fcitx5" =
     { pkgs, ... }:
     let
-      rime-config = pkgs.runCommand "rime-config" { } ''
-        mkdir -p $out/share/rime-data
-        cp ${builtins.toFile "default.yaml" ''
-          __include: rime_ice_suggestion:/
-          ascii_composer:
-            good_old_caps_lock: true
-            switch_key:
-              Caps_Lock: noop
-              Shift_L: noop
-              Shift_R: noop
-              Control_L: noop
-              Control_R: noop
-          menu:
-            page_size: 7
-          punctuator:
-            half_shape:
-              ':' : ':'
-              '''''' : ''''''
-              '"' : '"'
-              '`' : '`'
-              '^' : '^'
-        ''} $out/share/rime-data/default.yaml
+      rimeConfig = pkgs.runCommand "rimeConfig" { } ''
+        install -D ${builtins.toFile "default.yaml" "__include: rime_ice_suggestion:/"} $out/share/rime-data/default.yaml
       '';
     in
     {
@@ -34,8 +14,7 @@
           waylandFrontend = true;
           addons = [
             pkgs.fcitx5-mellow-themes
-            (pkgs.fcitx5-rime.override { rimeDataPkgs = [ pkgs.rime-ice ] ++ [ rime-config ]; })
-            # pkgs.fcitx5-pinyin-zhwiki
+            (pkgs.fcitx5-rime.override { rimeDataPkgs = [ pkgs.rime-ice ] ++ [ rimeConfig ]; })
             # pkgs.kdePackages.fcitx5-chinese-addons
           ];
           settings.addons = {
@@ -43,6 +22,7 @@
               Theme = "mellow-graphite";
               DarkTheme = "mellow-graphite-dark";
               UseDarkTheme = "True";
+              UseAccentColor = "False";
             };
           };
           settings.inputMethod = {
@@ -55,9 +35,7 @@
             "Groups/0/Items/1".Name = "rime";
             # "Groups/0/Items/1".Name = "pinyin";
           };
-          settings.globalOptions = {
-            "Hotkey/AltTriggerKeys"."0" = "VoidSymbol";
-          };
+          settings.globalOptions."Hotkey/AltTriggerKeys"."0" = "VoidSymbol";
           ignoreUserConfig = false; # Rime will use .local/share/fcitx5/rime/build
         };
       };
