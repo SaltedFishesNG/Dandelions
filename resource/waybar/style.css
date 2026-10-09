@@ -1,0 +1,74 @@
+@define-color bg rgba(0, 0, 0, 0.5);
+
+* {
+    font-family: "Fira Code", "Sarasa Mono CL", "Font Awesome 7 Free";
+    padding: 0 5px;
+}
+
+window#waybar {
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+tooltip {
+    background: @bg;
+    border: 1px solid #92cafa;
+}
+
+.module {
+    background-color: @bg;
+    border-radius: 10px;
+}
+.modules-center .module,
+.modules-right .module {
+    margin: 0 0 0 5px;
+    padding: 0 10px;
+}
+
+#workspaces button {
+    color: #cad3f5;
+    padding: 0;
+}
+#workspaces button.focused {
+    background-color: #363a4f;
+    border-radius: 100%;
+    padding: 0 5px;
+}
+
+#custom-theme {
+    border-radius: 100%;
+    margin: 5px;
+    padding: 3px;
+}
+
+#network.disconnected,
+#bluetooth.off,
+#pulseaudio.output.muted,
+#pulseaudio.input.source-muted {
+    color: black;
+    background-color: #fe968b;
+}
+
+#tray {
+    background-color: #676767;
+}
+#tray * {
+    padding: 0;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+#tray menu {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+#tray menu menuitem:hover {
+    color: black;
+    background-color: white;
+}
+#tray menu menuitem:disabled {
+    color: #676767;
+}
