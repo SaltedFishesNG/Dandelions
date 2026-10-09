@@ -39,6 +39,7 @@
         loader.efi.canTouchEfiVariables = true;
       };
       systemd.enableEmergencyMode = false;
+      systemd.settings.Manager.LogLevel = "notice";
       system.nixos-init.enable = true;
       system.etc.overlay.enable = true;
 

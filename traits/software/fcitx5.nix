@@ -1,11 +1,6 @@
 {
   traits."software/fcitx5" =
     { pkgs, ... }:
-    let
-      rimeConfig = pkgs.runCommand "rimeConfig" { } ''
-        install -D ${builtins.toFile "default.yaml" "__include: rime_ice_suggestion:/"} $out/share/rime-data/default.yaml
-      '';
-    in
     {
       i18n.inputMethod = {
         enable = true;
@@ -14,7 +9,7 @@
           waylandFrontend = true;
           addons = [
             pkgs.fcitx5-mellow-themes
-            (pkgs.fcitx5-rime.override { rimeDataPkgs = [ pkgs.rime-ice ] ++ [ rimeConfig ]; })
+            pkgs.fcitx5-rime
             # pkgs.kdePackages.fcitx5-chinese-addons
           ];
           settings.addons = {

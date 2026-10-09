@@ -35,7 +35,7 @@
           ".local/share/PrismLauncher"
           ".mozilla/firefox/default"
         ]
-        ++ lib.optionals (config.i18n.inputMethod.type == "fcitx5") [ ".local/share/fcitx5/rime/build" ]
+        ++ lib.optionals (config.i18n.inputMethod.type == "fcitx5") [ ".local/share/fcitx5/rime" ]
         ++ lib.optionals config.programs.steam.enable [ ".local/share/Steam" ]
         ++ lib.optionals config.services.flatpak.enable ([ ".var/app" ] ++ [ ".local/share/flatpak" ])
         ++ lib.optionals config.services.gnome.gnome-keyring.enable [ ".local/share/keyrings" ]

@@ -29,7 +29,10 @@
       };
       systemd.network.enable = !cfg.networkmanager.enable;
 
+      services.nscd.enable = false;
+      system.nssModules = lib.mkForce [ ];
       networking.resolvconf.enable = false;
+      networking.networkmanager.dns = lib.mkForce "none";
       services.resolved.enable = false;
       environment.etc."resolv.conf".text = ''
         nameserver 1.1.1.1

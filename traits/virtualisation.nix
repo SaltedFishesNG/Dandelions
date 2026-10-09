@@ -1,7 +1,6 @@
 {
   schema.virtualisation = {
     libvirt.enable = false; # bool
-    lxc.enable = false; # bool
     podman.enable = false; # bool
     xen.enable = false; # bool
     xenDom0Memory = 10000; # ints.unsigned
@@ -51,11 +50,6 @@
           onShutdown = "shutdown";
         };
 
-        lxc = lib.mkIf cfg.lxc.enable {
-          enable = true;
-          unprivilegedContainers = true;
-        };
-
         podman = lib.mkIf cfg.podman.enable {
           enable = true;
           dockerCompat = true;
@@ -72,17 +66,14 @@
       users.users.${node.schema.base.username}.extraGroups = [
         "kvm"
       ]
-      ++ lib.optionals config.virtualisation.libvirtd.enable [ "libvirtd" ]
-      ++ lib.optionals config.virtualisation.virtualbox.host.enable [ "vboxusers" ]
-      ++ lib.optionals config.virtualisation.lxc.enable [ "lxc-user" ];
+      ++ lib.optionals config.virtualisation.libvirtd.enable [ "libvirtd" ];
 
       programs.dconf.profiles.user.databases =
         let
           uris =
             lib.optionals (!config.virtualisation.libvirtd.enable) [ "qemu:///session" ]
             ++ lib.optionals config.virtualisation.libvirtd.enable [ "qemu:///system" ]
-            ++ lib.optionals config.virtualisation.xen.enable [ "xen:///" ]
-            ++ lib.optionals config.virtualisation.lxc.enable [ "lxc:///" ];
+            ++ lib.optionals config.virtualisation.xen.enable [ "xen:///" ];
         in
         [
           {
@@ -91,6 +82,6 @@
           }
         ];
 
-      networking.firewall.trustedInterfaces = lib.mkIf config.virtualisation.libvirtd.enable [ "virbr*" ];
+      networking.firewall.trustedInterfaces = lib.mkIf config.virtualisation.libvirtd.enable [ "virbr0" ];
     };
 }
