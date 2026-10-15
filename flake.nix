@@ -32,7 +32,7 @@
         };
     in
     {
-      nixosConfigurations = nixpkgs.lib.mapAttrs (_: mkSystem null) cluster.nodes;
+      nixosConfigurations = builtins.mapAttrs (_: mkSystem null) cluster.nodes;
       packages = builtins.mapAttrs (system: pkgs: {
         diskoImage = (mkSystem system cluster.nodes.Image).config.system.build.diskoImages;
         iso = (mkSystem system cluster.nodes.iso).config.system.build.isoImage;
