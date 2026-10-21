@@ -30,10 +30,10 @@
           "Pictures"
           "Projects"
 
+          ".config/mozilla/firefox/default"
           ({ directory = ".gnupg"; } // { mode = "0700"; })
-          ({ directory = ".ssh"; } // { mode = "0700"; })
           ".local/share/PrismLauncher"
-          ".mozilla/firefox/default"
+          ({ directory = ".ssh"; } // { mode = "0700"; })
         ]
         ++ lib.optionals (config.i18n.inputMethod.type == "fcitx5") [ ".local/share/fcitx5/rime" ]
         ++ lib.optionals config.programs.steam.enable [ ".local/share/Steam" ]
@@ -42,12 +42,12 @@
         ++ lib.optionals node.schema.software.extra [
           ".config/Signal"
           ".config/qBittorrent"
+          ".config/thunderbird/default"
           ".config/zed"
           # ".local/share/bottles"
           ".local/share/fractal"
           ".local/share/qBittorrent"
           ".local/share/zed"
-          ".thunderbird/default"
         ];
       };
     };
