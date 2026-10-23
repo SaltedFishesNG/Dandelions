@@ -14,6 +14,7 @@
 
   traits.base =
     {
+      config,
       inputs,
       lib,
       node,
@@ -31,17 +32,20 @@
 
       boot = {
         kernelParams = [ "drm.panic_screen=qr_code" ];
+        loader = {
+          efi.canTouchEfiVariables = true;
+          systemd-boot.enable = lib.mkDefault true;
+          systemd-boot.configurationLimit = 25;
+        };
         zfs.forceImportRoot = false;
-        plymouth.enable = false;
-        initrd.systemd.enable = true;
-        loader.systemd-boot.enable = lib.mkDefault true;
-        loader.systemd-boot.configurationLimit = 25;
-        loader.efi.canTouchEfiVariables = true;
+        zswap.enable = config.swapDevices != [ ];
       };
+      zramSwap.enable = config.swapDevices == [ ];
+
+      system.etc.overlay.enable = true;
+      system.nixos-init.enable = true;
       systemd.enableEmergencyMode = false;
       systemd.settings.Manager.LogLevel = "notice";
-      system.nixos-init.enable = true;
-      system.etc.overlay.enable = true;
 
       users.mutableUsers = false;
       users.users.${cfg.username} = {
@@ -68,25 +72,30 @@
           extraConfig = "permit persist keepenv :wheel";
         };
         sudo.enable = false;
-        sudo-rs = lib.mkIf cfg.sudo-rs.enable {
-          enable = true;
+        sudo-rs = {
+          enable = cfg.sudo-rs.enable;
           execWheelOnly = true;
           wheelNeedsPassword = true;
         };
-        tpm2 = lib.mkIf cfg.tpm2.enable {
-          enable = true;
+        tpm2 = {
+          enable = cfg.tpm2.enable;
           pkcs11.enable = true;
           tctiEnvironment.enable = true;
         };
       };
 
-      hardware.bluetooth = lib.mkIf cfg.bluetooth.enable {
-        enable = true;
+      hardware.bluetooth = {
+        enable = cfg.bluetooth.enable;
         powerOnBoot = true;
         settings.General.Experimental = true;
       };
 
       services = {
+        dbus.implementation = "broker";
+        kmscon = {
+          enable = true;
+          extraOptions = "--term xterm-256color";
+        };
         logind.settings.Login = lib.mkIf cfg.isLaptop {
           HandlePowerKey = "hibernate";
           HandleLidSwitch = "suspend-then-hibernate";
@@ -100,24 +109,12 @@
             X11Forwarding = true;
           };
         };
-        kmscon = {
-          enable = true;
-          extraOptions = "--term xterm-256color";
-        };
-        zram-generator = {
-          enable = true;
-          settings.zram0 = {
-            compression-algorithm = "zstd";
-            zram-size = "ram";
-          };
-        };
-        userborn.enable = true;
-        dbus.implementation = "broker";
-        pipewire = lib.mkIf cfg.pipewire.enable {
-          enable = true;
+        pipewire = {
+          enable = cfg.pipewire.enable;
           alsa.enable = true;
           pulse.enable = true;
         };
+        userborn.enable = true;
       };
 
       documentation.nixos.enable = false;

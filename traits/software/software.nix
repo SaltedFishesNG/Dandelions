@@ -100,6 +100,6 @@
         };
       };
 
-      services.flatpak.enable = lib.mkIf node.schema.software.extra true;
+      services.flatpak.enable = node.schema.software.extra;
     };
 }
