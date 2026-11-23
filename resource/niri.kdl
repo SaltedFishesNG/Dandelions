@@ -12,7 +12,7 @@ environment {
 hotkey-overlay {
     skip-at-startup
 }
-screenshot-path "~/Pictures/Screenshots/%Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/Pictures/Screenshots/Scrn_%Y%m%d_%H:%M:%S%Z.png"
 
 layer-rule {
     match namespace="^notifications$"
@@ -27,7 +27,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="firefox" title=r#"^(Picture-in-Picture|画中画|子母畫面)"#
+    match app-id="firefox" title="Picture-in-Picture"
     match app-id="steam"
     match app-id=r#"^steam_app_\d"#
     match app-id="thunderbird"

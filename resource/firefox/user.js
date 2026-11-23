@@ -116,8 +116,8 @@ user_pref("media.video_stats.enabled", false);
 // PREF: Trusted Recursive Resolver (DNS-over-HTTPS)
 // https://wiki.mozilla.org/Trusted_Recursive_Resolver
 user_pref("network.trr.mode", 3);
-user_pref("network.trr.uri", "https://cloudflare-dns.com/dns-query");
-user_pref("network.trr.custom_uri", "https://cloudflare-dns.com/dns-query");
+user_pref("network.trr.uri", "https://dns.google/dns-query");
+user_pref("network.trr.custom_uri", "https://dns.google/dns-query");
 
 // PREF: Disable Mozilla telemetry/experiments
 // https://wiki.mozilla.org/Platform/Features/Telemetry

@@ -1,11 +1,5 @@
 # https://www.dell.com/support/product-details/en-us/product/inspiron-15-5577-gaming-laptop/overview
-{
-  config,
-  lib,
-  modulesPath,
-  pkgs,
-  ...
-}:
+{ modulesPath, pkgs, ... }:
 {
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -22,28 +16,24 @@
   };
 
   hardware.cpu.intel.updateMicrocode = true;
-
-  services = {
-    thermald.enable = true;
-    tlp.enable = lib.mkDefault (!config.services.power-profiles-daemon.enable);
-  };
-  powerManagement.enable = true;
-
-  hardware.graphics.enable = true;
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
-    open = false;
-    modesetting.enable = true;
+    branch = "legacy_580";
     nvidiaSettings = false;
+    open = false;
     prime = {
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
       offload.enable = true;
     };
   };
-  services.xserver.videoDrivers = [ "nvidia" ];
   nixpkgs.config.allowUnfreePackages = [
     "nvidia-x11"
     "nvidia-kernel-modules"
   ];
+
+  services = {
+    thermald.enable = true;
+    tlp.enable = true;
+    xserver.videoDrivers = [ "nvidia" ];
+  };
 }

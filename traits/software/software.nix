@@ -67,7 +67,6 @@
             log.date = "iso8601";
             merge.autoStash = true;
             pull.autoStash = true;
-            pull.rebase = true;
             rebase.autoStash = true;
             safe.directory = "*";
           }
